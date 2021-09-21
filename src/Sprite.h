@@ -10,4 +10,8 @@ public:
 
 	explicit Sprite(const char* filename);
 
+    char *GetAsciiArt() const;
+    int GetHeight() const;
+    int GetWidth() const;
+
 };

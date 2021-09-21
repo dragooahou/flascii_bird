@@ -26,3 +26,15 @@ Sprite::Sprite(const char* filename) {
 	}
 
 }
+
+char *Sprite::GetAsciiArt() const {
+    return asciiArt;
+}
+
+int Sprite::GetHeight() const {
+    return height;
+}
+
+int Sprite::GetWidth() const {
+    return width;
+}

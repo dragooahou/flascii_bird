@@ -4,33 +4,35 @@
 
 class Vector2 {
 
-private:
+public:
 	float x;
 	float y;
 
-public:
+    Vector2() : x(0), y(0) {
+
+    }
 
 	Vector2(float x, float y) : x(x), y(y) {
 
 	}
 
-	Vector2 operator + (Vector2 other) {
+	Vector2 operator + (const Vector2& other) const {
 		return Vector2(x + other.x, y + other.y);
 	}
 
-	Vector2 operator - (Vector2 other) {
+	Vector2 operator - (const Vector2& other) const {
 		return Vector2(x - other.x, y - other.y);
 	}
 
-	Vector2 operator * (float scalar) {
+	Vector2 operator * (float scalar) const {
 		return Vector2(x * scalar, y * scalar);
 	}
 
-	float operator * (Vector2 other) {
+	float operator * (const Vector2& other) const {
 		return (x * other.y) + (y * other.x);
 	}
 
-	float Distance(Vector2 vector1, Vector2 vector2) {
+	float Distance(const Vector2& vector1, const Vector2& vector2) const {
 		return sqrt(((vector1.x - vector2.x) * (vector1.x - vector2.x)) + ((vector1.y - vector2.y) * (vector1.y - vector2.y)));
 	}
 

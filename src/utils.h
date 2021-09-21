@@ -6,7 +6,7 @@
 
 #include <string>
 
-#define INDEX_2DTO1D(x, y) x*sizeY+y
+#define INDEX_2DTO1D(x, y, sizeY) x*sizeY+y
 
 namespace utils {
 

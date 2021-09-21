@@ -13,5 +13,12 @@ private:
 public:
 	virtual void Update();
 
+    int GetId() const;
+    void SetId(int id);
 
+    const Vector2 &GetPosition() const;
+    void SetPosition(const Vector2 &position);
+
+    const Graphics &GetGfx() const;
+    void SetGfx(const Graphics &gfx);
 };

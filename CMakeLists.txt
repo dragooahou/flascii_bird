@@ -9,7 +9,8 @@ set(SOURCES
         src/GameObject.cpp  src/GameObject.h
         src/Sprite.cpp      src/Sprite.h
         src/Graphics.cpp    src/Graphics.h
-        src/Vector2.cpp     src/Vector2.h)
+        src/Vector2.cpp     src/Vector2.h
+        src/AsciiRenderer.cpp src/AsciiRenderer.h)
         
 
 add_executable(projet_ascii ${SOURCES})

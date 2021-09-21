@@ -4,6 +4,7 @@
 #include "Sprite.h"
 
 #include "utils.h"
+#include "AsciiRenderer.h"
 
 #define SCREEN_WIDTH 120
 #define SCREEN_HEIGHT 40
@@ -14,17 +15,29 @@ void InitWindow(int width, int height);
 
 int main() {
 
-
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT);
 
+    AsciiRenderer<SCREEN_WIDTH, SCREEN_HEIGHT> renderer;
+
+    Sprite testSprite = Sprite("assets/test.txt");
 
 
-    std::cout << "Test string" << std::endl;
-    Sprite* testSprite = new Sprite("assets/test.txt");
+    GameObject go;
+    go.SetPosition({20, 20});
+    go.SetGfx(Graphics(std::vector{testSprite}, Graphics::Layer::OBJECTS));
 
-    char c;
-    std::cin >> c;
+    // Main loop
+    bool isRunning = true;
+    while(isRunning) {
 
+        go.SetPosition(go.GetPosition() + Vector2(0.5f, 0.f));
+
+        renderer.Clear();
+        renderer.Render(go);
+        renderer.Present();
+
+        Sleep(20);
+    }
 
     return 0;
 }
