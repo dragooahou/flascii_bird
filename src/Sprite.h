@@ -5,14 +5,14 @@
 class Sprite {
 
 private:
-	std::string asciiArt;
+	char** asciiArt;
 	int height, width;
 
 public:
 
 	explicit Sprite(const std::string& filename);
 
-    std::string GetAsciiArt() const;
+    char** GetAsciiArt() const;
     int GetHeight() const;
     int GetWidth() const;
 

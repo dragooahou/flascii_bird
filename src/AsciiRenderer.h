@@ -67,7 +67,7 @@ void AsciiRenderer<WIDTH, HEIGHT>::Render(const GameObject &gameObject) {
         for(int x = 0; x < spriteToRender.GetWidth(); ++x) {
             screenBuffer[static_cast<int>(gameObject.GetPosition().y) + y]
                         [static_cast<int>(gameObject.GetPosition().x) + x]
-                        .Char.AsciiChar = spriteToRender.GetAsciiArt()[INDEX_2DTO1D(x, y, height)];
+                        .Char.AsciiChar = spriteToRender.GetAsciiArt()[y][x];
         }
     }
 
