@@ -1,0 +1,16 @@
+# ninja log v5
+0	443	6538509702352697	CMakeFiles/projet_ascii.dir/main.cpp.obj	c33b29c6b8c4dc2e
+344	489	6539185448054280	projet_ascii.exe	818a9d3777670b0
+2	310	6538607278014532	CMakeFiles/projet_ascii.dir/Vector2.cpp.obj	933eb9969e76a648
+3	577	6539185307175892	CMakeFiles/projet_ascii.dir/src/main.cpp.obj	4afb15eb94f310f5
+0	310	6538607278014532	CMakeFiles/projet_ascii.dir/GameObject.cpp.obj	4d62afc5032a85b4
+0	463	6539185306035832	CMakeFiles/projet_ascii.dir/src/utils.cpp.obj	4d57b68894df3db2
+0	411	6539174853210217	CMakeFiles/projet_ascii.dir/src/Vector2.cpp.obj	fe19049b057f52e1
+0	344	6539185446924736	CMakeFiles/projet_ascii.dir/src/GameObject.cpp.obj	1565ca16dc39298e
+3	325	6539184334396114	CMakeFiles/projet_ascii.dir/src/Graphics.cpp.obj	120d18c5cd9d2c6c
+1	352	6539184334666102	CMakeFiles/projet_ascii.dir/src/Sprite.cpp.obj	d542f76b0b23f6bb
+6	159	6539188616394409	CMakeFiles/projet_ascii.dir/src/Vector2.cpp.obj	fe19049b057f52e1
+0	159	6539188616394409	CMakeFiles/projet_ascii.dir/src/Graphics.cpp.obj	120d18c5cd9d2c6c
+4	159	6539188616414410	CMakeFiles/projet_ascii.dir/src/GameObject.cpp.obj	1565ca16dc39298e
+2	343	6539188618234426	CMakeFiles/projet_ascii.dir/src/Sprite.cpp.obj	d542f76b0b23f6bb
+343	473	6539188619284411	projet_ascii.exe	818a9d3777670b0

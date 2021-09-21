@@ -2,8 +2,7 @@
 // Created by etien on 20/09/2021.
 //
 
-#ifndef PROJET_ASCII_UTILS_H
-#define PROJET_ASCII_UTILS_H
+#pragma once
 
 
 #include <string>
@@ -17,4 +16,3 @@ namespace utils {
 };
 
 
-#endif //PROJET_ASCII_UTILS_H
