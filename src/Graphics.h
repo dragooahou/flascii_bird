@@ -9,11 +9,12 @@ class Graphics {
 public:
 	enum class Layer {
 
-		BACKGROUND = 0,
-		OBJECTS = 1,
-		VFX = 2,
-		UI = 3
+		BACKGROUND,
+		OBJECTS,
+		VFX,
+		UI,
 
+        count
 	};
 
 private:

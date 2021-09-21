@@ -14,7 +14,9 @@
 template<int WIDTH, int HEIGHT>
 class AsciiRenderer {
 
-    CHAR_INFO screenBuffer[HEIGHT][WIDTH];
+    using ScreenBuffer = CHAR_INFO[HEIGHT][WIDTH];
+
+    ScreenBuffer buffers[static_cast<int>(Graphics::Layer::count)];
 
 public:
     AsciiRenderer();
@@ -35,13 +37,14 @@ AsciiRenderer<WIDTH, HEIGHT>::AsciiRenderer() {
 template<int WIDTH, int HEIGHT>
 void AsciiRenderer<WIDTH, HEIGHT>::Clear() {
 
-    for(int y = 0; y < HEIGHT; ++y) {
-        for(int x = 0; x < WIDTH; ++x) {
-            screenBuffer[y][x].Char.AsciiChar = ' ';
-            screenBuffer[y][x].Attributes = FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_BLUE;
+    for(int i = 0; i < static_cast<int>(Graphics::Layer::count); ++i) {
+        for(int y = 0; y < HEIGHT; ++y) {
+            for(int x = 0; x < WIDTH; ++x) {
+                buffers[i][y][x].Char.AsciiChar = ' ';
+                buffers[i][y][x].Attributes = FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_BLUE;
+            }
         }
     }
-
 }
 
 template<int WIDTH, int HEIGHT>
@@ -52,7 +55,18 @@ void AsciiRenderer<WIDTH, HEIGHT>::Present() {
     static const COORD dwBufferCoord = { 0, 0 };
     static SMALL_RECT rcRegion = { 0, 0, WIDTH-1, HEIGHT-1 };
 
-    if(!WriteConsoleOutput( hOutput, (CHAR_INFO *)screenBuffer, dwBufferSize, dwBufferCoord, &rcRegion)) {
+
+    ScreenBuffer finalBuffer;
+    memcpy(finalBuffer, buffers, WIDTH * HEIGHT * sizeof(CHAR_INFO));
+
+    for(int i = 1; i < static_cast<int>(Graphics::Layer::count); ++i) {
+        utils::memcpy_if<CHAR_INFO>((CHAR_INFO *)finalBuffer, (CHAR_INFO *)buffers[i], WIDTH * HEIGHT,
+             [](CHAR_INFO c) {
+                 return c.Char.AsciiChar != ' ';
+             });
+    }
+
+    if(!WriteConsoleOutput( hOutput, (CHAR_INFO *)finalBuffer, dwBufferSize, dwBufferCoord, &rcRegion)) {
         std::cout << "SetConsoleWindowInfo() error:  " << utils::GetLastErrorAsString() << std::endl;
     }
 
@@ -68,9 +82,10 @@ void AsciiRenderer<WIDTH, HEIGHT>::Render(const GameObject &gameObject) {
 
     for(int y = 0; y < height; ++y) {
         for(int x = 0; x < width; ++x) {
-            screenBuffer[static_cast<int>(goPosition.y) + y]
-                        [static_cast<int>(goPosition.x) + x]
-                        .Char.AsciiChar = spriteToRender->GetAsciiArt()[y][x];
+            buffers[static_cast<int>(gameObject.GetGfx().GetLayer())]
+                   [static_cast<int>(goPosition.y) + y]
+                   [static_cast<int>(goPosition.x) + x]
+                   .Char.AsciiChar = spriteToRender->GetAsciiArt()[y][x];
         }
     }
 

@@ -11,6 +11,7 @@
 
 
 void InitWindow(int width, int height);
+LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 int main() {
 
@@ -24,6 +25,10 @@ int main() {
     go.SetPosition({20, 20});
     go.SetGfx(Graphics(std::vector{testSprite}, Graphics::Layer::OBJECTS));
 
+    GameObject gobg;
+    gobg.SetPosition({45, 21});
+    gobg.SetGfx(Graphics(std::vector{testSprite}, Graphics::Layer::BACKGROUND));
+
     // Main loop
     bool isRunning = true;
     while(isRunning) {
@@ -32,6 +37,7 @@ int main() {
 
         renderer.Clear();
         renderer.Render(go);
+        renderer.Render(gobg);
         renderer.Present();
 
         Sleep(20);
@@ -82,4 +88,5 @@ void InitWindow(int width, int height) {
 
     //show window after updating
     ShowWindow(hwnd_console,SW_SHOW);
+    
 }
