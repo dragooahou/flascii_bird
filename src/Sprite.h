@@ -1,16 +1,18 @@
 #pragma once
 
+#include <string>
+
 class Sprite {
 
 private:
-	char* asciiArt;
+	std::string asciiArt;
 	int height, width;
 
 public:
 
-	explicit Sprite(const char* filename);
+	explicit Sprite(const std::string& filename);
 
-    char *GetAsciiArt() const;
+    std::string GetAsciiArt() const;
     int GetHeight() const;
     int GetWidth() const;
 
