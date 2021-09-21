@@ -12,15 +12,13 @@
 
 void InitWindow(int width, int height);
 
-
 int main() {
 
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT);
 
     AsciiRenderer<SCREEN_WIDTH, SCREEN_HEIGHT> renderer;
 
-    Sprite testSprite = Sprite("assets/test.txt");
-
+    Sprite* testSprite = new Sprite("assets/test.txt");
 
     GameObject go;
     go.SetPosition({20, 20});
@@ -39,9 +37,10 @@ int main() {
         Sleep(20);
     }
 
+    delete testSprite;
+
     return 0;
 }
-
 
 void InitWindow(int width, int height) {
 

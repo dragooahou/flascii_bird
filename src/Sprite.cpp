@@ -30,8 +30,6 @@ Sprite::Sprite(const string& filename) {
 		}
 	}
 
-
-
 }
 
 char** Sprite::GetAsciiArt() const {
@@ -44,4 +42,11 @@ int Sprite::GetHeight() const {
 
 int Sprite::GetWidth() const {
     return width;
+}
+
+Sprite::~Sprite() {
+    for (int i = 0; i < height; i++) {
+        delete asciiArt[i];
+    }
+    delete asciiArt;
 }

@@ -55,19 +55,22 @@ void AsciiRenderer<WIDTH, HEIGHT>::Present() {
     if(!WriteConsoleOutput( hOutput, (CHAR_INFO *)screenBuffer, dwBufferSize, dwBufferCoord, &rcRegion)) {
         std::cout << "SetConsoleWindowInfo() error:  " << utils::GetLastErrorAsString() << std::endl;
     }
+
 }
 
 template<int WIDTH, int HEIGHT>
 void AsciiRenderer<WIDTH, HEIGHT>::Render(const GameObject &gameObject) {
 
-    const Sprite& spriteToRender = gameObject.GetGfx().GetCurrentFrame();
-    const int height = spriteToRender.GetHeight();
+    const Sprite* spriteToRender = gameObject.GetGfx().GetCurrentFrame();
+    const Vector2& goPosition = gameObject.GetPosition();
+    const int height = spriteToRender->GetHeight();
+    const int width = spriteToRender->GetWidth();
 
     for(int y = 0; y < height; ++y) {
-        for(int x = 0; x < spriteToRender.GetWidth(); ++x) {
-            screenBuffer[static_cast<int>(gameObject.GetPosition().y) + y]
-                        [static_cast<int>(gameObject.GetPosition().x) + x]
-                        .Char.AsciiChar = spriteToRender.GetAsciiArt()[y][x];
+        for(int x = 0; x < width; ++x) {
+            screenBuffer[static_cast<int>(goPosition.y) + y]
+                        [static_cast<int>(goPosition.x) + x]
+                        .Char.AsciiChar = spriteToRender->GetAsciiArt()[y][x];
         }
     }
 

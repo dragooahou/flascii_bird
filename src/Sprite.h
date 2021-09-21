@@ -11,6 +11,7 @@ private:
 public:
 
 	explicit Sprite(const std::string& filename);
+    virtual ~Sprite();
 
     char** GetAsciiArt() const;
     int GetHeight() const;
