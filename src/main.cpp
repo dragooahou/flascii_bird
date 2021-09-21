@@ -1,6 +1,7 @@
 #define _WIN32_WINNT 0x0501
 #include <windows.h>
 #include <iostream>
+#include "Sprite.h"
 
 #include "utils.h"
 
@@ -17,8 +18,9 @@ int main() {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT);
 
 
-    std::cout << "Test string" << std::endl;
 
+    std::cout << "Test string" << std::endl;
+    Sprite* testSprite = new Sprite("assets/test.txt");
 
     char c;
     std::cin >> c;

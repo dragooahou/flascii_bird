@@ -3,9 +3,11 @@
 class Sprite {
 
 private:
-	char** asciiArt;
+	char* asciiArt;
+	int height, width;
 
 public:
-	char** LoadAsciiFromFile(char* filename);
+
+	explicit Sprite(const char* filename);
 
 };
