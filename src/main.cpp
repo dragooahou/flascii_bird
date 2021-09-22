@@ -5,6 +5,7 @@
 
 #include "utils.h"
 #include "AsciiRenderer.h"
+#include "InputManager.h"
 
 #define SCREEN_WIDTH 120
 #define SCREEN_HEIGHT 40
@@ -20,6 +21,7 @@ int main() {
     AsciiRenderer<SCREEN_WIDTH, SCREEN_HEIGHT> renderer;
 
     Sprite* testSprite = new Sprite("assets/test.txt");
+    InputManager inputManager = InputManager();
 
     GameObject go;
     go.SetPosition({20, 20});
@@ -33,7 +35,11 @@ int main() {
     bool isRunning = true;
     while(isRunning) {
 
-        go.SetPosition(go.GetPosition() + Vector2(0.5f, 0.f));
+        inputManager.ListenToUserInput();
+
+        if (inputManager.getVirtualKeyState(VK_RIGHT) == InputManager::Input::PRESSED) {
+            go.SetPosition(go.GetPosition() + Vector2(0.5f, 0.f));
+        }
 
         renderer.Clear();
         renderer.Render(go);
