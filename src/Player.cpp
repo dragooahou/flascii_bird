@@ -39,9 +39,23 @@ void Player::Update(const InputManager& inputManager, NYTimer& timer) {
 		velocity = -velocityCap;
 	}
 
-	const Vector2 velocityVector = Vector2(0.f, velocity);
+	Vector2 velocityVector = Vector2(0.f, velocity);
 	Vector2 pos = GetPosition();
 
-	SetPosition(pos + velocityVector);
+
+
+    // DEBUG TODO A VIRER
+
+    if (inputManager.getVirtualKeyState(VK_RIGHT) == InputManager::Input::PRESSED) {
+        velocityVector.x += 1.f;
+    }
+
+    if (inputManager.getVirtualKeyState(VK_LEFT) == InputManager::Input::PRESSED) {
+        velocityVector.x -= 1.f;
+    }
+
+    // END DEBUG
+
+    SetPosition(pos + velocityVector);
 
 }

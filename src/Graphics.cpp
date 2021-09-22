@@ -2,7 +2,7 @@
 #include <vector>
 #include "Graphics.h"
 
-const std::vector <Sprite*> &Graphics::GetSprites() const {
+const std::vector <AsciiSprite*> &Graphics::GetSprites() const {
     return sprites;
 }
 
@@ -18,7 +18,7 @@ Graphics::Layer Graphics::GetLayer() const {
     return layer;
 }
 
-const Sprite* Graphics::GetCurrentFrame() const {
+const AsciiSprite* Graphics::GetCurrentFrame() const {
     return sprites[currentFrame];
 }
 
@@ -34,4 +34,4 @@ void Graphics::SetLayer(Graphics::Layer layer) {
     Graphics::layer = layer;
 }
 
-Graphics::Graphics(const std::vector<Sprite*> &sprites, Graphics::Layer layer) : sprites(sprites), layer(layer) {}
+Graphics::Graphics(const std::vector<AsciiSprite*> &sprites, Graphics::Layer layer) : sprites(sprites), layer(layer) {}

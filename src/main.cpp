@@ -1,16 +1,17 @@
 #define _WIN32_WINNT 0x0501
 #include <windows.h>
 #include <iostream>
-#include "Sprite.h"
-#include "Player.h"
 
+#include "AsciiSprite.h"
 #include "utils.h"
 #include "AsciiRenderer.h"
 #include "InputManager.h"
 #include "NYTimer.h"
+#include "TextureSprite.h"
+#include "Player.h"
 
-#define SCREEN_WIDTH 120
-#define SCREEN_HEIGHT 40
+#define SCREEN_WIDTH 150
+#define SCREEN_HEIGHT 100
 
 
 void InitWindow(int width, int height);
@@ -22,9 +23,13 @@ int main() {
     NYTimer timer = NYTimer();
     timer.start();
 
+    InitCImg();
+
+
     AsciiRenderer<SCREEN_WIDTH, SCREEN_HEIGHT> renderer;
 
-    Sprite* testSprite = new Sprite("assets/test.txt");
+    AsciiSprite* testSprite = new AsciiSprite("assets/test.txt");
+
     InputManager inputManager = InputManager();
 
     Player player = Player({ 20,20 }, (Graphics(std::vector{ testSprite }, Graphics::Layer::OBJECTS)));
@@ -33,18 +38,26 @@ int main() {
     gobg.SetPosition({45, 21});
     gobg.SetGfx(Graphics(std::vector{testSprite}, Graphics::Layer::BACKGROUND));
 
+    //    TextureSprite texSprite = TextureSprite("assets/todd.jpg");
+//    Sprite toddSprite = texSprite.GetAsciiArt(10, 20);
+//    go.SetGfx(Graphics(std::vector{&toddSprite}, Graphics::Layer::OBJECTS));
+
     // Main loop
     bool isRunning = true;
 
     while(isRunning) {
 
         inputManager.ListenToUserInput();
-
-        player.Update(inputManager, timer);
-
         if (inputManager.getVirtualKeyState(VK_ESCAPE) == InputManager::Input::JUST_PRESSED) {
             isRunning = false;
         }
+
+//        if (inputManager.getVirtualKeyState(VK_SPACE) == InputManager::Input::PRESSED) {
+//            texSprite.Rotate(1.f);
+//            toddSprite = texSprite.GetAsciiArt(10, 20);
+//        }
+
+        player.Update(inputManager, timer);
 
         renderer.Clear();
         renderer.Render(player);
@@ -54,7 +67,6 @@ int main() {
         Sleep(20);
     }
 
-    delete testSprite;
 
     return 0;
 }
@@ -96,6 +108,9 @@ void InitWindow(int width, int height) {
 
     // Put the wanted style
     SetWindowLongPtr(hwnd_console,GWL_STYLE, new_style);
+
+    //Fullscreen
+    SendMessage(hwnd_console, WM_SYSKEYDOWN, VK_RETURN, 0x20000000);
 
     //show window after updating
     ShowWindow(hwnd_console,SW_SHOW);

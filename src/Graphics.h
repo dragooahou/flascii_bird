@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "Sprite.h"
+#include "AsciiSprite.h"
 
 class Graphics {
 
@@ -18,7 +18,7 @@ public:
 	};
 
 private:
-	std::vector<Sprite*> sprites;
+	std::vector<AsciiSprite*> sprites;
 	float speed = 1;
 	int currentFrame = 0;
 	Layer layer = Layer::OBJECTS;
@@ -26,14 +26,14 @@ private:
 public:
 
     Graphics() = default;
-    Graphics(const std::vector<Sprite*> &sprites, Layer layer);
+    Graphics(const std::vector<AsciiSprite*> &sprites, Layer layer);
 
-    const std::vector<Sprite*> &GetSprites() const;
+    const std::vector<AsciiSprite*> &GetSprites() const;
 
     float GetSpeed() const;
 
     int GetCurrentFrameID() const;
-    const Sprite* GetCurrentFrame() const;
+    const AsciiSprite* GetCurrentFrame() const;
 
     Layer GetLayer() const;
 

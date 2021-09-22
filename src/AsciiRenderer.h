@@ -75,17 +75,26 @@ void AsciiRenderer<WIDTH, HEIGHT>::Present() {
 template<int WIDTH, int HEIGHT>
 void AsciiRenderer<WIDTH, HEIGHT>::Render(const GameObject &gameObject) {
 
-    const Sprite* spriteToRender = gameObject.GetGfx().GetCurrentFrame();
+    const AsciiSprite* spriteToRender = gameObject.GetGfx().GetCurrentFrame();
     const Vector2& goPosition = gameObject.GetPosition();
     const int height = spriteToRender->GetHeight();
     const int width = spriteToRender->GetWidth();
+    const Vector2 spriteCenterOffset = spriteToRender->GetCenterOffset();
 
     for(int y = 0; y < height; ++y) {
         for(int x = 0; x < width; ++x) {
-            buffers[static_cast<int>(gameObject.GetGfx().GetLayer())]
-                   [static_cast<int>(goPosition.y) + y]
-                   [static_cast<int>(goPosition.x) + x]
-                   .Char.AsciiChar = spriteToRender->GetAsciiArt()[y][x];
+
+            int yPos = static_cast<int>(goPosition.y) + y - static_cast<int>(spriteCenterOffset.y);
+            int xPos = static_cast<int>(goPosition.x) + x - static_cast<int>(spriteCenterOffset.x);
+
+            // Filter pixels that are outside the screen
+            if(xPos >= WIDTH || xPos < 0 || yPos >= HEIGHT || yPos < 0) {
+                continue;
+            }
+
+            buffers[static_cast<int>(gameObject.GetGfx().GetLayer())][yPos][xPos]
+                   .Char.AsciiChar = spriteToRender->GetAsciiArt()(y, x);
+
         }
     }
 
