@@ -5,13 +5,15 @@ set(CMAKE_CXX_STANDARD 17)
 
 set(SOURCES
         src/main.cpp
-        src/utils.cpp           src/utils.h
-        src/GameObject.cpp      src/GameObject.h
-        src/Sprite.cpp          src/Sprite.h
-        src/Graphics.cpp        src/Graphics.h
-        src/Vector2.cpp         src/Vector2.h
-        src/AsciiRenderer.cpp   src/AsciiRenderer.h
-        src/InputManager.cpp    src/InputManager.h)
+        src/utils.cpp           	src/utils.h
+        src/GameObject.cpp      	src/GameObject.h
+        src/Sprite.cpp          	src/Sprite.h
+        src/Graphics.cpp        	src/Graphics.h
+        src/Vector2.cpp         	src/Vector2.h
+        src/AsciiRenderer.cpp   	src/AsciiRenderer.h
+        src/InputManager.cpp    	src/InputManager.h
+	    src/Player.cpp			    src/Player.h
+	    src/NYTimer.cpp			    src/NYTimer.h)
         
 
 add_executable(projet_ascii ${SOURCES})

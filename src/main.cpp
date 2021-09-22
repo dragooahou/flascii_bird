@@ -2,10 +2,12 @@
 #include <windows.h>
 #include <iostream>
 #include "Sprite.h"
+#include "Player.h"
 
 #include "utils.h"
 #include "AsciiRenderer.h"
 #include "InputManager.h"
+#include "NYTimer.h"
 
 #define SCREEN_WIDTH 120
 #define SCREEN_HEIGHT 40
@@ -17,15 +19,15 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 int main() {
 
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT);
+    NYTimer timer = NYTimer();
+    timer.start();
 
     AsciiRenderer<SCREEN_WIDTH, SCREEN_HEIGHT> renderer;
 
     Sprite* testSprite = new Sprite("assets/test.txt");
     InputManager inputManager = InputManager();
 
-    GameObject go;
-    go.SetPosition({20, 20});
-    go.SetGfx(Graphics(std::vector{testSprite}, Graphics::Layer::OBJECTS));
+    Player player = Player({ 20,20 }, (Graphics(std::vector{ testSprite }, Graphics::Layer::OBJECTS)));
 
     GameObject gobg;
     gobg.SetPosition({45, 21});
@@ -33,16 +35,19 @@ int main() {
 
     // Main loop
     bool isRunning = true;
+
     while(isRunning) {
 
         inputManager.ListenToUserInput();
 
-        if (inputManager.getVirtualKeyState(VK_RIGHT) == InputManager::Input::PRESSED) {
-            go.SetPosition(go.GetPosition() + Vector2(0.5f, 0.f));
+        player.Update(inputManager, timer);
+
+        if (inputManager.getVirtualKeyState(VK_ESCAPE) == InputManager::Input::JUST_PRESSED) {
+            isRunning = false;
         }
 
         renderer.Clear();
-        renderer.Render(go);
+        renderer.Render(player);
         renderer.Render(gobg);
         renderer.Present();
 

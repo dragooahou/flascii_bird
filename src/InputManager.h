@@ -18,7 +18,7 @@ public:
 
 	InputManager();
 	void ListenToUserInput();
-	Input getVirtualKeyState(int vk);
+	Input getVirtualKeyState(int vk) const;
 
 private:
 

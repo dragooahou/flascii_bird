@@ -40,7 +40,7 @@ void InputManager::ListenToUserInput() {
 	}
 }
 
- InputManager::Input InputManager::getVirtualKeyState(int vk)
+ InputManager::Input InputManager::getVirtualKeyState(int vk) const
 {
 	return keyState[vk];
 }
