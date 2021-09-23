@@ -5,7 +5,7 @@
 class Vector2 {
 
 public:
-	
+
 	union {
 		float x;
 		float w;
@@ -44,6 +44,10 @@ public:
 
 	Vector2 operator * (float scalar) const {
 		return Vector2(x * scalar, y * scalar);
+	}
+
+	Vector2 operator / (float scalar) const {
+		return Vector2(x / scalar, y / scalar);
 	}
 
 	float operator * (const Vector2& other) const {

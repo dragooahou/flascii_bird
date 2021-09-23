@@ -35,14 +35,14 @@ void GameObject::SetGfx(const Graphics &gfx) {
 bool GameObject::CollideWith(const GameObject& other, bool filterSpaces) {
 
     Rect thisRect;
-    thisRect.position = position;
     thisRect.size = {static_cast<float>(gfx.GetCurrentFrame()->GetWidth()),
                      static_cast<float>(gfx.GetCurrentFrame()->GetHeight())};
+    thisRect.position = position - thisRect.size/2.f;
 
     Rect otherRect;
-    otherRect.position = other.position;
     otherRect.size = {static_cast<float>(other.gfx.GetCurrentFrame()->GetWidth()),
                      static_cast<float>(other.gfx.GetCurrentFrame()->GetHeight())};
+    otherRect.position = other.position - otherRect.size/2.f;
 
     Rect overlappingArea;
     bool aabbCollide = Rect::areOverlapping(thisRect, otherRect, &overlappingArea);
@@ -52,11 +52,13 @@ bool GameObject::CollideWith(const GameObject& other, bool filterSpaces) {
         for(int y = 0; y < overlappingArea.size.y; ++y) {
             for(int x = 0; x < overlappingArea.size.x; ++x) {
 
-                Vector2 c1Pos = overlappingArea.position - position + Vector2{static_cast<float>(x), static_cast<float>(y)};
-                Vector2 c2Pos = overlappingArea.position - other.position + Vector2{static_cast<float>(x), static_cast<float>(y)};
+                Vector2 currPixel = Vector2{static_cast<float>(x), static_cast<float>(y)};
 
-                char c1 = gfx.GetCurrentFrame()->GetAsciiArt()(c1Pos.y, c1Pos.y);
-                char c2 = other.gfx.GetCurrentFrame()->GetAsciiArt()(c2Pos.y, c2Pos.y);
+                Vector2 c1Pos = overlappingArea.position - thisRect.position + currPixel;
+                Vector2 c2Pos = overlappingArea.position - otherRect.position + currPixel;
+
+                char c1 = gfx.GetCurrentFrame()->GetAsciiArt()(c1Pos.y, c1Pos.x);
+                char c2 = other.gfx.GetCurrentFrame()->GetAsciiArt()(c2Pos.y, c2Pos.x);
 
                 if(c1 != ' ' && c2 != ' ') {
                     return true;

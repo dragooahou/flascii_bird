@@ -49,14 +49,6 @@ int main() {
         );
     }
 
-    GameObject gobg;
-    gobg.SetPosition({45, 21});
-    gobg.SetGfx(Graphics(std::vector{testSprite2}, Graphics::Layer::BACKGROUND));
-
-//    TextureSprite texSprite = TextureSprite("assets/todd.jpg");
-//    AsciiSprite toddSprite = texSprite.GetAsciiArt(10, 20);
-//    player.SetGfx(Graphics(std::vector{&toddSprite}, Graphics::Layer::OBJECTS));
-
     // Main loop
     bool isRunning = true;
 
@@ -73,23 +65,19 @@ int main() {
             isRunning = false;
         }
 
-//        if (inputManager.getVirtualKeyState(VK_SPACE) == InputManager::Input::PRESSED) {
-//            texSprite.Rotate(1.f);
-//            toddSprite = texSprite.GetAsciiArt(10, 20);
-//        }
-
-        player.Update(inputManager, timer);
-
-        if(player.CollideWith(gobg)) {
-            player.SetPosition(Vector2(0, 0));
+        for (int i = 0; i < OBSTACLE_AMOUNT; i++) {
+            if(player.CollideWith(obstacle[i])) {
+                player.SetPosition(Vector2(0, 0));
+            }
         }
+
+
 
         renderer.Clear();
         for (int i = 0; i < OBSTACLE_AMOUNT; i++) {
             renderer.Render(obstacle[i]);
         }
         renderer.Render(player);
-        renderer.Render(gobg);
         renderer.Present();
 
         Sleep(20);

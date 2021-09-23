@@ -84,8 +84,8 @@ void AsciiRenderer<WIDTH, HEIGHT>::Render(const GameObject &gameObject) {
     for(int y = 0; y < height; ++y) {
         for(int x = 0; x < width; ++x) {
 
-            int yPos = static_cast<int>(goPosition.y) + y ;//- static_cast<int>(spriteCenterOffset.y);
-            int xPos = static_cast<int>(goPosition.x) + x ;//- static_cast<int>(spriteCenterOffset.x);
+            int yPos = static_cast<int>(goPosition.y) + y - static_cast<int>(spriteCenterOffset.y);
+            int xPos = static_cast<int>(goPosition.x) + x - static_cast<int>(spriteCenterOffset.x);
 
             // Filter pixels that are outside the screen
             if(xPos >= WIDTH || xPos < 0 || yPos >= HEIGHT || yPos < 0) {
