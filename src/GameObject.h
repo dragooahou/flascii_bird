@@ -6,15 +6,14 @@
 class GameObject {
 
 private:
-	int ID;
 	Vector2 position;
 	Graphics gfx;
 
 public:
 	virtual void Update();
 
-    int GetId() const;
-    void SetId(int id);
+    GameObject();
+    GameObject(Vector2 position, Graphics gfx);
 
     const Vector2 &GetPosition() const;
     Vector2 GetOrigin() const;

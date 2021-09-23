@@ -8,7 +8,9 @@ class Player : public GameObject {
 
 public:
 
+	Player();
 	Player(Vector2 position, Graphics gfx);
+
 	void Update(const InputManager& inputManager, NYTimer& timer);
 
 private:

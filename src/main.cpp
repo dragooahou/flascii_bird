@@ -1,6 +1,5 @@
 #define _WIN32_WINNT 0x0501
 #include <windows.h>
-#include <wingdi.h>
 #include <iostream>
 
 #include "AsciiSprite.h"
@@ -14,6 +13,12 @@
 #define SCREEN_WIDTH 240
 #define SCREEN_HEIGHT 80
 
+#include "Obstacle.h"
+
+#define SCREEN_WIDTH    120
+#define SCREEN_HEIGHT   40
+#define OBSTACLE_AMOUNT 4
+#define OBSTACLE_OFFSET 20
 
 void InitWindow(int width, int height);
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
@@ -32,9 +37,18 @@ int main() {
     AsciiSprite* testSprite = new AsciiSprite("assets/test.txt");
     AsciiSprite* testSprite2 = new AsciiSprite("assets/test2.txt");
 
+    Sprite* testSprite = new Sprite("assets/test.txt");
+    Sprite* obstacleSprite = new Sprite("assets/test_tuyaux.txt");
+
     InputManager inputManager = InputManager();
 
     Player player = Player({ 20,20 }, (Graphics(std::vector{ testSprite }, Graphics::Layer::OBJECTS)));
+
+    Obstacle* obstacle[4];
+    for (int i = 0; i < OBSTACLE_AMOUNT; i++) {
+        srand((time(0)));
+        obstacle[i] = new Obstacle({ SCREEN_WIDTH + OBSTACLE_OFFSET, (rand() % 1000 / 1000.f) * SCREEN_HEIGHT }, (Graphics(std::vector{ obstacleSprite }, Graphics::Layer::OBJECTS)));
+    }
 
     GameObject gobg;
     gobg.SetPosition({45, 21});
@@ -50,6 +64,12 @@ int main() {
     while(isRunning) {
 
         inputManager.ListenToUserInput();
+
+        for (int i = 0; i < OBSTACLE_AMOUNT; i++) {
+            obstacle[i]->Update(SCREEN_WIDTH, SCREEN_HEIGHT);
+        }
+        player.Update(inputManager, timer);
+
         if (inputManager.getVirtualKeyState(VK_ESCAPE) == InputManager::Input::JUST_PRESSED) {
             isRunning = false;
         }
