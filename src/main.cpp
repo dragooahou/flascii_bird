@@ -7,26 +7,22 @@
 #include "AsciiRenderer.h"
 #include "InputManager.h"
 #include "NYTimer.h"
-<<<<<<< Updated upstream
 #include "TextureSprite.h"
 #include "Player.h"
-
-#define SCREEN_WIDTH 150
-#define SCREEN_HEIGHT 100
-=======
 #include "Obstacle.h"
 
-#define SCREEN_WIDTH    120
-#define SCREEN_HEIGHT   40
+#define SCREEN_WIDTH    240
+#define SCREEN_HEIGHT   66
 #define OBSTACLE_AMOUNT 4
-#define OBSTACLE_OFFSET 20
->>>>>>> Stashed changes
+#define OBSTACLE_OFFSET 60
 
 
 void InitWindow(int width, int height);
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 int main() {
+
+    srand(time(NULL));
 
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT);
     NYTimer timer = NYTimer();
@@ -37,28 +33,27 @@ int main() {
 
     AsciiRenderer<SCREEN_WIDTH, SCREEN_HEIGHT> renderer;
 
-<<<<<<< Updated upstream
     AsciiSprite* testSprite = new AsciiSprite("assets/test.txt");
+    AsciiSprite* obstacleSprite = new AsciiSprite("assets/test_tuyaux.txt");
 
-=======
-    Sprite* testSprite = new Sprite("assets/test.txt");
-    Sprite* obstacleSprite = new Sprite("assets/test_tuyaux.txt");
->>>>>>> Stashed changes
     InputManager inputManager = InputManager();
 
     Player player = Player({ 20,20 }, (Graphics(std::vector{ testSprite }, Graphics::Layer::OBJECTS)));
 
-    Obstacle* obstacle[4];
+    Obstacle obstacle[4];
     for (int i = 0; i < OBSTACLE_AMOUNT; i++) {
-        srand((time(0)));
-        obstacle[i] = new Obstacle({ SCREEN_WIDTH + OBSTACLE_OFFSET, (rand() % 1000 / 1000.f) * SCREEN_HEIGHT }, (Graphics(std::vector{ obstacleSprite }, Graphics::Layer::OBJECTS)));
+        float randomRatio = (rand() / (float)RAND_MAX) -0.5f ;
+        obstacle[i] = Obstacle(
+            {(float) (SCREEN_WIDTH + (OBSTACLE_OFFSET * i)), SCREEN_HEIGHT/2 + (randomRatio * (SCREEN_HEIGHT/4))},
+            (Graphics(std::vector{ obstacleSprite }, Graphics::Layer::OBJECTS))
+        );
     }
 
     GameObject gobg;
     gobg.SetPosition({45, 21});
     gobg.SetGfx(Graphics(std::vector{testSprite}, Graphics::Layer::BACKGROUND));
 
-    //    TextureSprite texSprite = TextureSprite("assets/todd.jpg");
+//    TextureSprite texSprite = TextureSprite("assets/todd.jpg");
 //    Sprite toddSprite = texSprite.GetAsciiArt(10, 20);
 //    go.SetGfx(Graphics(std::vector{&toddSprite}, Graphics::Layer::OBJECTS));
 
@@ -68,15 +63,12 @@ int main() {
     while(isRunning) {
 
         inputManager.ListenToUserInput();
-<<<<<<< Updated upstream
-=======
 
         for (int i = 0; i < OBSTACLE_AMOUNT; i++) {
-            obstacle[i]->Update(SCREEN_WIDTH, SCREEN_HEIGHT);
+            obstacle[i].Update(SCREEN_WIDTH, SCREEN_HEIGHT);
         }
         player.Update(inputManager, timer);
 
->>>>>>> Stashed changes
         if (inputManager.getVirtualKeyState(VK_ESCAPE) == InputManager::Input::JUST_PRESSED) {
             isRunning = false;
         }
@@ -89,6 +81,9 @@ int main() {
         player.Update(inputManager, timer);
 
         renderer.Clear();
+        for (int i = 0; i < OBSTACLE_AMOUNT; i++) {
+            renderer.Render(obstacle[i]);
+        }
         renderer.Render(player);
         renderer.Render(gobg);
         renderer.Present();

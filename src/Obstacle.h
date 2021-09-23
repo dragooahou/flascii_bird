@@ -2,7 +2,7 @@
 
 #include "GameObject.h"
 
-class Obstacle : GameObject {
+class Obstacle : public GameObject {
 
 public:
 

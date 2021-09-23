@@ -5,11 +5,9 @@
 
 
 Obstacle::Obstacle() {
-
 }
 
 Obstacle::Obstacle(Vector2 position, Graphics gfx) : GameObject::GameObject(position, gfx) {
-
 }
 
 void Obstacle::Update(float screenWidth, float screenHeight) {
@@ -20,7 +18,7 @@ void Obstacle::Update(float screenWidth, float screenHeight) {
 
 
 	if (pos.x <= 0.f) {
-		srand((time(0)));
-		SetPosition({ screenWidth, (rand()%1000 / 1000.f) * screenHeight});
+		float randomRatio = (rand()/(float)RAND_MAX) - 0.5f;
+		SetPosition({ screenWidth, screenHeight / 2 + (randomRatio * (screenHeight / 2)) });
 	}
 }
