@@ -1,5 +1,6 @@
 #define _WIN32_WINNT 0x0501
 #include <windows.h>
+#include <wingdi.h>
 #include <iostream>
 
 #include "AsciiSprite.h"
@@ -10,8 +11,8 @@
 #include "TextureSprite.h"
 #include "Player.h"
 
-#define SCREEN_WIDTH 150
-#define SCREEN_HEIGHT 100
+#define SCREEN_WIDTH 240
+#define SCREEN_HEIGHT 80
 
 
 void InitWindow(int width, int height);
@@ -29,6 +30,7 @@ int main() {
     AsciiRenderer<SCREEN_WIDTH, SCREEN_HEIGHT> renderer;
 
     AsciiSprite* testSprite = new AsciiSprite("assets/test.txt");
+    AsciiSprite* testSprite2 = new AsciiSprite("assets/test2.txt");
 
     InputManager inputManager = InputManager();
 
@@ -36,11 +38,11 @@ int main() {
 
     GameObject gobg;
     gobg.SetPosition({45, 21});
-    gobg.SetGfx(Graphics(std::vector{testSprite}, Graphics::Layer::BACKGROUND));
+    gobg.SetGfx(Graphics(std::vector{testSprite2}, Graphics::Layer::BACKGROUND));
 
-    //    TextureSprite texSprite = TextureSprite("assets/todd.jpg");
-//    Sprite toddSprite = texSprite.GetAsciiArt(10, 20);
-//    go.SetGfx(Graphics(std::vector{&toddSprite}, Graphics::Layer::OBJECTS));
+//    TextureSprite texSprite = TextureSprite("assets/todd.jpg");
+//    AsciiSprite toddSprite = texSprite.GetAsciiArt(10, 20);
+//    player.SetGfx(Graphics(std::vector{&toddSprite}, Graphics::Layer::OBJECTS));
 
     // Main loop
     bool isRunning = true;
@@ -58,6 +60,10 @@ int main() {
 //        }
 
         player.Update(inputManager, timer);
+
+        if(player.CollideWith(gobg)) {
+            player.SetPosition(Vector2(0, 0));
+        }
 
         renderer.Clear();
         renderer.Render(player);

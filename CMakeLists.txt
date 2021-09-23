@@ -15,7 +15,7 @@ set(SOURCES
         src/TextureSprite.cpp src/TextureSprite.h
         src/Matrix.h
         src/Player.cpp			    src/Player.h
-        src/NYTimer.cpp			    src/NYTimer.h)
+        src/NYTimer.cpp			    src/NYTimer.h src/Rect.cpp src/Rect.h)
 
 
 add_executable(projet_ascii ${SOURCES})
