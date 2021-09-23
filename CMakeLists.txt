@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 set(SOURCES
         src/main.cpp
+<<<<<<< Updated upstream
         src/utils.cpp           src/utils.h
         src/GameObject.cpp      src/GameObject.h
         src/AsciiSprite.cpp src/AsciiSprite.h
@@ -17,5 +18,18 @@ set(SOURCES
         src/Player.cpp			    src/Player.h
         src/NYTimer.cpp			    src/NYTimer.h)
 
+=======
+        src/utils.cpp           	src/utils.h
+        src/GameObject.cpp      	src/GameObject.h
+        src/Sprite.cpp          	src/Sprite.h
+        src/Graphics.cpp        	src/Graphics.h
+        src/Vector2.cpp         	src/Vector2.h
+        src/AsciiRenderer.cpp   	src/AsciiRenderer.h
+        src/InputManager.cpp    	src/InputManager.h
+	    src/Player.cpp			    src/Player.h
+	    src/NYTimer.cpp			    src/NYTimer.h
+        src/Obstacle.cpp            src/Obstacle.h)
+        
+>>>>>>> Stashed changes
 
 add_executable(projet_ascii ${SOURCES})

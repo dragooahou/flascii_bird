@@ -4,13 +4,15 @@ void GameObject::Update() {
 
 }
 
-int GameObject::GetId() const {
-    return ID;
+GameObject::GameObject() {
+
 }
 
-void GameObject::SetId(int id) {
-    ID = id;
+GameObject::GameObject(Vector2 position, Graphics gfx) {
+    SetPosition(position);
+    SetGfx(gfx);
 }
+
 
 const Vector2 &GameObject::GetPosition() const {
     return position;

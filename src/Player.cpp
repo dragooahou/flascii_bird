@@ -6,10 +6,12 @@
 #include "Player.h"
 
 
-Player::Player(Vector2 position, Graphics gfx)
+Player::Player() {
+
+}
+
+Player::Player(Vector2 position, Graphics gfx) : GameObject(position, gfx)
 {
-	SetPosition(position);
-	SetGfx(gfx);
 	acceleration = 0.f;
 	velocity = 0.f;
 }
