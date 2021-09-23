@@ -5,8 +5,16 @@
 class Vector2 {
 
 public:
-	float x;
-	float y;
+	
+	union {
+		float x;
+		float w;
+	};
+
+	union {
+		float y;
+		float h;
+	};
 
     Vector2() : x(0), y(0) {
 

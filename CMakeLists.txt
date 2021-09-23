@@ -14,8 +14,9 @@ set(SOURCES
         src/InputManager.cpp        src/InputManager.h
         src/TextureSprite.cpp       src/TextureSprite.h
                                     src/Matrix.h
-        src/Player.cpp			    src/Player.h
-        src/NYTimer.cpp			    src/NYTimer.h
+        src/Player.cpp	            src/Player.h
+        src/NYTimer.cpp		    src/NYTimer.h
+        src/Rect.cpp                src/Rect.h
         src/Obstacle.cpp            src/Obstacle.h)
 
 add_executable(projet_ascii ${SOURCES})

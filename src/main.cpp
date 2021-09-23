@@ -51,11 +51,11 @@ int main() {
 
     GameObject gobg;
     gobg.SetPosition({45, 21});
-    gobg.SetGfx(Graphics(std::vector{testSprite}, Graphics::Layer::BACKGROUND));
+    gobg.SetGfx(Graphics(std::vector{testSprite2}, Graphics::Layer::BACKGROUND));
 
 //    TextureSprite texSprite = TextureSprite("assets/todd.jpg");
-//    Sprite toddSprite = texSprite.GetAsciiArt(10, 20);
-//    go.SetGfx(Graphics(std::vector{&toddSprite}, Graphics::Layer::OBJECTS));
+//    AsciiSprite toddSprite = texSprite.GetAsciiArt(10, 20);
+//    player.SetGfx(Graphics(std::vector{&toddSprite}, Graphics::Layer::OBJECTS));
 
     // Main loop
     bool isRunning = true;
@@ -79,6 +79,10 @@ int main() {
 //        }
 
         player.Update(inputManager, timer);
+
+        if(player.CollideWith(gobg)) {
+            player.SetPosition(Vector2(0, 0));
+        }
 
         renderer.Clear();
         for (int i = 0; i < OBSTACLE_AMOUNT; i++) {
