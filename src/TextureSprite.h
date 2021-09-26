@@ -20,8 +20,10 @@ class TextureSprite {
 public:
     explicit TextureSprite(const std::string& filename);
 
-    AsciiSprite GetAsciiArt(int div_w = 8, int div_h = 16);
+    AsciiSprite GetAsciiArt(int div_w = 8, int div_h = 16) const;
 
     void Rotate(float degree);
+    void SetRotation(float degree);
 
+    float GetRotation() const;
 };

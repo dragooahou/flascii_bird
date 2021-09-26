@@ -8,7 +8,7 @@ set(SOURCES
         src/utils.cpp               src/utils.h
         src/GameObject.cpp          src/GameObject.h
         src/AsciiSprite.cpp         src/AsciiSprite.h
-        src/Graphics.cpp            src/Graphics.h
+        src/SimpleGraphics.cpp      src/SimpleGraphics.h
         src/Vector2.cpp             src/Vector2.h
         src/AsciiRenderer.cpp       src/AsciiRenderer.h
         src/InputManager.cpp        src/InputManager.h
@@ -17,6 +17,7 @@ set(SOURCES
         src/Player.cpp	            src/Player.h
         src/NYTimer.cpp		        src/NYTimer.h
         src/Rect.cpp                src/Rect.h
-        src/Obstacle.cpp            src/Obstacle.h)
+        src/Obstacle.cpp            src/Obstacle.h
+        src/IGraphics.cpp           src/IGraphics.h src/TextureGraphics.cpp src/TextureGraphics.h)
 
 add_executable(projet_ascii ${SOURCES})

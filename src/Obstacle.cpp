@@ -7,7 +7,7 @@
 Obstacle::Obstacle() {
 }
 
-Obstacle::Obstacle(Vector2 position, Graphics gfx) : GameObject::GameObject(position, gfx) {
+Obstacle::Obstacle(Vector2 position, GfxPtr gfx) : GameObject::GameObject(position, gfx) {
 }
 
 void Obstacle::Update(float screenWidth, float screenHeight) {

@@ -10,7 +10,7 @@ Player::Player() {
 
 }
 
-Player::Player(Vector2 position, Graphics gfx) : GameObject(position, gfx)
+Player::Player(Vector2 position, GfxPtr gfx) : GameObject(position, gfx)
 {
 	acceleration = 0.f;
 	velocity = 0.f;
@@ -44,6 +44,9 @@ void Player::Update(const InputManager& inputManager, NYTimer& timer) {
 	Vector2 velocityVector = Vector2(0.f, velocity);
 	Vector2 pos = GetPosition();
 
+    float angle = (velocityVector + Vector2(1.f, 0.f)).AngleDeg();
+    GetGfx()->SetRotation(angle);
+
 
 
     // DEBUG TODO A VIRER
@@ -57,6 +60,8 @@ void Player::Update(const InputManager& inputManager, NYTimer& timer) {
     }
 
     // END DEBUG
+
+
 
     SetPosition(pos + velocityVector);
 

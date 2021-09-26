@@ -9,7 +9,7 @@ class Player : public GameObject {
 public:
 
 	Player();
-	Player(Vector2 position, Graphics gfx);
+	Player(Vector2 position, GfxPtr gfx);
 
 	void Update(const InputManager& inputManager, NYTimer& timer);
 

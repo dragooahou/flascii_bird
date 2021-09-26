@@ -36,7 +36,7 @@ TextureSprite::TextureSprite(const std::string &filename) : originalImg(filename
     rotatedImg = originalImg;
 }
 
-AsciiSprite TextureSprite::GetAsciiArt(int div_w, int div_h) {
+AsciiSprite TextureSprite::GetAsciiArt(int div_w, int div_h) const {
 
     int w = rotatedImg.width() / div_w;
     int h = rotatedImg.height() / div_h;
@@ -57,5 +57,17 @@ AsciiSprite TextureSprite::GetAsciiArt(int div_w, int div_h) {
 
 void TextureSprite::Rotate(float degree) {
     rotation += degree;
+    rotatedImg = originalImg.get_rotate(rotation, 0, 1);
+}
+
+float TextureSprite::GetRotation() const {
+    return rotation;
+}
+
+void TextureSprite::SetRotation(float degree) {
+    if(rotation == degree) {
+        return;
+    }
+    rotation = degree;
     rotatedImg = originalImg.get_rotate(rotation, 0, 1);
 }

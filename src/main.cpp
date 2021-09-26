@@ -10,6 +10,7 @@
 #include "TextureSprite.h"
 #include "Player.h"
 #include "Obstacle.h"
+#include "TextureGraphics.h"
 
 #define SCREEN_WIDTH    240
 #define SCREEN_HEIGHT   66
@@ -38,14 +39,14 @@ int main() {
 
     InputManager inputManager = InputManager();
 
-    Player player = Player({ 20,20 }, (Graphics(std::vector{ testSprite }, Graphics::Layer::OBJECTS)));
+    Player player = Player({ 20,20 }, std::make_shared<TextureGraphics>("assets/flappy_bird.png", SimpleGraphics::Layer::OBJECTS));
 
     Obstacle obstacle[4];
     for (int i = 0; i < OBSTACLE_AMOUNT; i++) {
         float randomRatio = (rand() / (float)RAND_MAX) -0.5f ;
         obstacle[i] = Obstacle(
             {(float) (SCREEN_WIDTH + (OBSTACLE_OFFSET * i)), SCREEN_HEIGHT/2 + (randomRatio * (SCREEN_HEIGHT/4))},
-            (Graphics(std::vector{ obstacleSprite }, Graphics::Layer::OBJECTS))
+            (std::make_shared<SimpleGraphics>(std::vector{obstacleSprite }, SimpleGraphics::Layer::OBJECTS))
         );
     }
 

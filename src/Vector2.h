@@ -1,5 +1,6 @@
 #pragma once
 
+#define _USE_MATH_DEFINES
 #include <math.h>
 
 class Vector2 {
@@ -56,6 +57,14 @@ public:
 
 	float Distance(const Vector2& vector1, const Vector2& vector2) const {
 		return sqrt(((vector1.x - vector2.x) * (vector1.x - vector2.x)) + ((vector1.y - vector2.y) * (vector1.y - vector2.y)));
+	}
+
+	float AngleRad() {
+		return atan2(y, x);
+	}
+
+	float AngleDeg() {
+		return atan2(y, x)*180.f/M_PI;
 	}
 
 };
