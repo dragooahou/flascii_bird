@@ -14,10 +14,15 @@ set(SOURCES
         src/InputManager.cpp        src/InputManager.h
         src/TextureSprite.cpp       src/TextureSprite.h
                                     src/Matrix.h
+                                    src/CImg.h
         src/Player.cpp	            src/Player.h
         src/NYTimer.cpp		        src/NYTimer.h
         src/Rect.cpp                src/Rect.h
         src/Obstacle.cpp            src/Obstacle.h
-        src/IGraphics.cpp           src/IGraphics.h src/TextureGraphics.cpp src/TextureGraphics.h)
+        src/IGraphics.cpp           src/IGraphics.h
+        src/TextureGraphics.cpp     src/TextureGraphics.h
+        src/ScoreDisplayer.cpp      src/ScoreDisplayer.h
+        src/GameManager.cpp         src/GameManager.h)
 
 add_executable(projet_ascii ${SOURCES})
+target_compile_options(projet_ascii PRIVATE /showIncludes)

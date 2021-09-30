@@ -1,7 +1,6 @@
 #pragma once
 
 #include "InputManager.h"
-#include "NYTimer.h"
 #include "GameObject.h"
 
 class Player : public GameObject {

@@ -1,5 +1,8 @@
 #pragma once
 
+
+#include <Windows.h>
+
 class NYTimer {
 
 public:

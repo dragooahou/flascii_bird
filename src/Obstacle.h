@@ -11,6 +11,8 @@ public:
 	Obstacle();
 	Obstacle(Vector2 position, GfxPtr gfx);
 
+	bool isAlreadyChecked = false;
+
 	void Update(float screenWidth, float screenHeight);
 
 };

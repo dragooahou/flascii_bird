@@ -2,7 +2,6 @@
 
 #include <vector>
 
-#include "AsciiSprite.h"
 #include "IGraphics.h"
 
 class SimpleGraphics : public IGraphics {

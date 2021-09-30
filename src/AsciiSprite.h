@@ -14,6 +14,7 @@ private:
 public:
 
     AsciiSprite();
+    AsciiSprite(const Matrix<char> &matrix);
 	explicit AsciiSprite(const std::string& filename);
     AsciiSprite(int height, int width);
 

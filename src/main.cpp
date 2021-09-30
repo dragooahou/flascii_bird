@@ -1,21 +1,8 @@
 #define _WIN32_WINNT 0x0501
-#include <windows.h>
+#include <Windows.h>
 #include <iostream>
 
-#include "AsciiSprite.h"
-#include "utils.h"
-#include "AsciiRenderer.h"
-#include "InputManager.h"
-#include "NYTimer.h"
-#include "TextureSprite.h"
-#include "Player.h"
-#include "Obstacle.h"
-#include "TextureGraphics.h"
-
-#define SCREEN_WIDTH    240
-#define SCREEN_HEIGHT   66
-#define OBSTACLE_AMOUNT 4
-#define OBSTACLE_OFFSET 60
+#include "GameManager.h"
 
 
 void InitWindow(int width, int height);
@@ -23,69 +10,25 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 int main() {
 
-    srand(time(NULL));
-
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT);
-    NYTimer timer = NYTimer();
-    timer.start();
-
     InitCImg();
 
+    GameManager gameManager;
 
-    AsciiRenderer<SCREEN_WIDTH, SCREEN_HEIGHT> renderer;
-
-    AsciiSprite* testSprite = new AsciiSprite("assets/test.txt");
-    AsciiSprite* obstacleSprite = new AsciiSprite("assets/test_tuyaux.txt");
-
-    InputManager inputManager = InputManager();
-
-    Player player = Player({ 20,20 }, std::make_shared<TextureGraphics>("assets/flappy_bird.png", SimpleGraphics::Layer::OBJECTS));
-
-    Obstacle obstacle[4];
-    for (int i = 0; i < OBSTACLE_AMOUNT; i++) {
-        float randomRatio = (rand() / (float)RAND_MAX) -0.5f ;
-        obstacle[i] = Obstacle(
-            {(float) (SCREEN_WIDTH + (OBSTACLE_OFFSET * i)), SCREEN_HEIGHT/2 + (randomRatio * (SCREEN_HEIGHT/4))},
-            (std::make_shared<SimpleGraphics>(std::vector{obstacleSprite }, SimpleGraphics::Layer::OBJECTS))
-        );
+    while (gameManager.isRunning) {
+        if (gameManager.state == GameManager::GameState::RUNNING) {
+            gameManager.Update();
+            gameManager.Render();
+        }
+        else if (gameManager.state == GameManager::GameState::GAMEOVER) {
+            gameManager.GameOver();
+        }
+        else if (gameManager.state == GameManager::GameState::SCOREBOARD) {
+            //TODO
+        }
+        
+        Sleep(16);
     }
-
-    // Main loop
-    bool isRunning = true;
-
-    while(isRunning) {
-
-        inputManager.ListenToUserInput();
-
-        for (int i = 0; i < OBSTACLE_AMOUNT; i++) {
-            obstacle[i].Update(SCREEN_WIDTH, SCREEN_HEIGHT);
-        }
-        player.Update(inputManager, timer);
-
-        if (inputManager.getVirtualKeyState(VK_ESCAPE) == InputManager::Input::JUST_PRESSED) {
-            isRunning = false;
-        }
-
-        for (int i = 0; i < OBSTACLE_AMOUNT; i++) {
-            if(player.CollideWith(obstacle[i])) {
-                player.SetPosition(Vector2(0, 0));
-            }
-        }
-
-
-
-        renderer.Clear();
-        for (int i = 0; i < OBSTACLE_AMOUNT; i++) {
-            renderer.Render(obstacle[i]);
-        }
-        renderer.Render(player);
-        renderer.Present();
-
-        Sleep(20);
-    }
-
-
-    return 0;
 }
 
 void InitWindow(int width, int height) {

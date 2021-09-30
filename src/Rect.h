@@ -2,8 +2,7 @@
 // Created by etien on 23/09/2021.
 //
 
-#ifndef PROJET_ASCII_RECT_H
-#define PROJET_ASCII_RECT_H
+#pragma once
 
 
 #include "Vector2.h"
@@ -16,5 +15,3 @@ struct Rect {
 
 };
 
-
-#endif //PROJET_ASCII_RECT_H

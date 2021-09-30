@@ -20,5 +20,6 @@ void Obstacle::Update(float screenWidth, float screenHeight) {
 	if (pos.x <= 0.f) {
 		float randomRatio = (rand()/(float)RAND_MAX) - 0.5f;
 		SetPosition({ screenWidth, screenHeight / 2 + (randomRatio * (screenHeight / 2)) });
+		isAlreadyChecked = false;
 	}
 }
