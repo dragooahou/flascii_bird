@@ -3,7 +3,13 @@
 #include <random>
 #include "GameManager.h"
 #include <windows.h>
+#include <string>
 #include <iostream>
+
+#define INGAME_ANCHOR_X 112
+#define INGAME_ANCHOR_Y 12
+#define GAMEOVER_ANCHOR_X 134
+#define GAMEOVER_ANCHOR_Y 37
 
 GameManager::GameManager() {
 
@@ -14,22 +20,24 @@ GameManager::GameManager() {
 
     playerSprite = new AsciiSprite("assets/test.txt");
     obstacleSprite = new AsciiSprite("assets/test_tuyaux.txt");
+    gameOverSprite = new AsciiSprite("assets/gameover.txt");
+
+    for (int i = 0; i < 10; i++) {
+        std::string path = "";
+        char iTemp[3];
+        sprintf(iTemp, "%d", i);
+        std::string iString = iTemp;
+        path = "assets/ascii_fonts/spliff_" + iString + ".txt";
+        scoreSprite[i] = new AsciiSprite(path);
+    }
+    gameOverDisplay = GameObject({ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 }, (std::make_shared<SimpleGraphics>(std::vector{ gameOverSprite }, IGraphics::Layer::UI)));
 
     inputManager = InputManager();
 
-    player = Player({ 20,20 }, std::make_shared<TextureGraphics>("assets/flappy_bird.bmp", SimpleGraphics::Layer::OBJECTS));
+    scoreDisplayer = ScoreDisplayer(Vector2(INGAME_ANCHOR_X, INGAME_ANCHOR_Y), scoreSprite, IGraphics::Layer::UI);
+    Init();
 
-    for (int i = 0; i < OBSTACLE_AMOUNT; i++) {
-        float randomRatio = (rand() / (float)RAND_MAX) - 0.5f;
-        obstacle[i] = Obstacle(
-            { (float)(SCREEN_WIDTH + (OBSTACLE_OFFSET * i)), SCREEN_HEIGHT / 2 + (randomRatio * (SCREEN_HEIGHT / 4)) },
-            (std::make_shared<SimpleGraphics>(std::vector{ obstacleSprite }, SimpleGraphics::Layer::OBJECTS))
-        );
 
-    }
-
-    score = 0;
-    scoreDisplayer = ScoreDisplayer({ SCREEN_WIDTH / 2, 5 });
 
     isRunning = true;
     state = GameManager::GameState::RUNNING;
@@ -72,7 +80,9 @@ void GameManager::Render() {
         renderer.Render(obstacle[i]);
     }
     renderer.Render(player);
-    renderer.Render(scoreDisplayer);
+    for (int i = 0; i < 3; i++) {
+        renderer.Render(scoreDisplayer.GetDisplayer(i));
+    }
     renderer.Present();
 
 }
@@ -80,6 +90,7 @@ void GameManager::Render() {
 void GameManager::GameOver() {
 
     inputManager.ListenToUserInput();
+    scoreDisplayer.Move(Vector2(GAMEOVER_ANCHOR_X, GAMEOVER_ANCHOR_Y));
 
     if (inputManager.getVirtualKeyState(VK_ESCAPE) == InputManager::Input::JUST_PRESSED) {
         state = GameState::ENDING;
@@ -92,21 +103,36 @@ void GameManager::GameOver() {
     if (inputManager.getVirtualKeyState(VK_RETURN) == InputManager::Input::JUST_PRESSED) {
         state = GameState::SCOREBOARD;
     }
+
+    renderer.Clear();
+    renderer.Render(gameOverDisplay);
+    for (int i = 0; i < 3; i++) {
+        renderer.Render(scoreDisplayer.GetDisplayer(i));
+    }
+    renderer.Present();
+
+    
+
 }
 
-void GameManager::Reset() {
+void GameManager::Init() {
 
-    player = Player({ 20,20 }, std::make_shared<TextureGraphics>("assets/flappy_bird.bmp", SimpleGraphics::Layer::OBJECTS));
-
+    player = Player({ 20,20 }, std::make_shared<TextureGraphics>("assets/flappy_bird.bmp", IGraphics::Layer::OBJECTS));
     for (int i = 0; i < OBSTACLE_AMOUNT; i++) {
         float randomRatio = (rand() / (float)RAND_MAX) - 0.5f;
         obstacle[i] = Obstacle(
             { (float)(SCREEN_WIDTH + (OBSTACLE_OFFSET * i)), SCREEN_HEIGHT / 2 + (randomRatio * (SCREEN_HEIGHT / 4)) },
-            (std::make_shared<SimpleGraphics>(std::vector{ obstacleSprite }, SimpleGraphics::Layer::OBJECTS))
+            (std::make_shared<SimpleGraphics>(std::vector{ obstacleSprite }, IGraphics::Layer::OBJECTS))
         );
 
     }
-
     score = 0;
+
+}
+
+void GameManager::Reset() {
+
+    scoreDisplayer.Move(Vector2(INGAME_ANCHOR_X, INGAME_ANCHOR_Y));
+    Init();
 
 }

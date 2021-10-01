@@ -29,12 +29,14 @@ private:
 	AsciiRenderer<SCREEN_WIDTH, SCREEN_HEIGHT> renderer;
 	AsciiSprite* playerSprite;
 	AsciiSprite* obstacleSprite;
+	AsciiSprite* gameOverSprite;
+	AsciiSprite* scoreSprite[10];
+	GameObject gameOverDisplay;
 	Obstacle obstacle[OBSTACLE_AMOUNT];
 	ScoreDisplayer scoreDisplayer;
 
 
 public:
-
 
 	enum class GameState {
 		RUNNING,
@@ -45,11 +47,11 @@ public:
 
 	bool isRunning = false;
 	GameState state;
+	void Init();
 	GameManager();
 	void Update();
 	void Render();
 	void GameOver();
 	void Reset();
-
 
 };

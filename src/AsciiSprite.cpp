@@ -15,7 +15,7 @@ AsciiSprite::AsciiSprite(const string& filename) {
 	//Initiate height and width of a sprite according to the first line
 	input >> width;
 	input >> height;
-	string asciiTab[143];
+	string* asciiTab = new string[height];
 	getline(input, nextLine);
 
 	int i = 0;
@@ -25,7 +25,7 @@ AsciiSprite::AsciiSprite(const string& filename) {
 	}
 
 	asciiArt = Matrix<char>(height, width);
-	for (int i = 0; i < height; i++) {
+	for (int i = 0; i < height-1; i++) {
 		for (int j = 0; j < width; j++) {
 			asciiArt(i, j) = asciiTab[i][j];
 		}
