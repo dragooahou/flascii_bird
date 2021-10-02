@@ -55,8 +55,12 @@ public:
 		return (x * other.y) + (y * other.x);
 	}
 
-	float Distance(const Vector2& vector1, const Vector2& vector2) const {
+	static float Distance(const Vector2& vector1, const Vector2& vector2) {
 		return sqrt(((vector1.x - vector2.x) * (vector1.x - vector2.x)) + ((vector1.y - vector2.y) * (vector1.y - vector2.y)));
+	}
+
+	float Distance(const Vector2& other) const {
+		return Distance(*this, other);
 	}
 
 	float AngleRad() {

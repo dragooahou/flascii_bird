@@ -7,8 +7,8 @@ class ScoreDisplayer : public GameObject {
 
 public:
 	ScoreDisplayer();
-	ScoreDisplayer(Vector2 &position, AsciiSprite** fontSprite, IGraphics::Layer renderLayer);
-	void Move(Vector2& position);
+	ScoreDisplayer(const Vector2 &position, AsciiSprite** fontSprite, IGraphics::Layer renderLayer);
+	void Move(const Vector2& position);
 
 	void Update(int score);
 	GameObject GetDisplayer(int i);

@@ -5,12 +5,16 @@
 
 class Player : public GameObject {
 
+    Colliders::Rectangle collider;
+
 public:
 
 	Player();
 	Player(Vector2 position, GfxPtr gfx);
 
 	void Update(const InputManager& inputManager, NYTimer& timer);
+
+    const Colliders::ICollider *GetCollider() const override;
 
 private:
 

@@ -17,12 +17,17 @@ set(SOURCES
                                     src/CImg.h
         src/Player.cpp	            src/Player.h
         src/NYTimer.cpp		        src/NYTimer.h
-        src/Rect.cpp                src/Rect.h
         src/Obstacle.cpp            src/Obstacle.h
         src/IGraphics.cpp           src/IGraphics.h
         src/TextureGraphics.cpp     src/TextureGraphics.h
         src/ScoreDisplayer.cpp      src/ScoreDisplayer.h
-        src/GameManager.cpp         src/GameManager.h)
+        src/GameManager.cpp         src/GameManager.h src/Colliders.cpp src/Colliders.h)
 
 add_executable(projet_ascii ${SOURCES})
-target_compile_options(projet_ascii PRIVATE /showIncludes)
+
+if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    target_compile_options(projet_ascii PRIVATE -fsanitize=address /EHa)
+    target_link_directories(projet_ascii PRIVATE "$ENV{ProgramFiles\(x86\)}/Microsoft Visual Studio/2019/Professional/VC/Tools/Llvm/x64/lib/clang/10.0.0/lib/windows")
+    target_link_libraries(projet_ascii PRIVATE clang_rt.asan_dynamic-x86_64 clang_rt.asan_dynamic_runtime_thunk-x86_64)
+    target_link_options(projet_ascii PRIVATE /wholearchive:clang_rt.asan_dynamic_runtime_thunk-x86_64.lib)
+endif()

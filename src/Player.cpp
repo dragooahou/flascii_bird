@@ -14,6 +14,7 @@ Player::Player(Vector2 position, GfxPtr gfx) : GameObject(position, gfx)
 {
 	acceleration = 0.f;
 	velocity = 0.f;
+    collider.size = Vector2(18, 8);
 }
 
 void Player::Update(const InputManager& inputManager, NYTimer& timer) {
@@ -65,4 +66,9 @@ void Player::Update(const InputManager& inputManager, NYTimer& timer) {
 
     SetPosition(pos + velocityVector);
 
+    collider.position = GetPosition() - collider.size/2.f;
+}
+
+const Colliders::ICollider *Player::GetCollider() const {
+    return &collider;
 }

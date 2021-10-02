@@ -65,6 +65,10 @@ void GameManager::Update() {
         isRunning = false;
     }
 
+    if (inputManager.getVirtualKeyState(VK_F3) == InputManager::Input::JUST_PRESSED) {
+        renderer.SetShowColliders(!renderer.IsShowColliders());
+    }
+
     for (int i = 0; i < OBSTACLE_AMOUNT; i++) {
         if (player.CollideWith(obstacle[i])) {
             state = GameState::GAMEOVER;

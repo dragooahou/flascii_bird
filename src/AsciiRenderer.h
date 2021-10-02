@@ -17,6 +17,7 @@ class AsciiRenderer {
     using ScreenBuffer = CHAR_INFO[HEIGHT][WIDTH];
 
     ScreenBuffer buffers[static_cast<int>(SimpleGraphics::Layer::count)];
+    bool showColliders = false;
 
 public:
     AsciiRenderer();
@@ -25,7 +26,8 @@ public:
     void Render(const GameObject& gameObject);
     void Present();
 
-
+    void SetShowColliders(bool showColliders);
+    bool IsShowColliders() const;
 };
 
 
@@ -100,6 +102,33 @@ void AsciiRenderer<WIDTH, HEIGHT>::Render(const GameObject &gameObject) {
         }
     }
 
+    if(showColliders) {
+
+        const auto* collider = gameObject.GetCollider();
+
+        for(int y = 0; y < HEIGHT; ++y) {
+            for (int x = 0; x < WIDTH; ++x) {
+                if(collider != nullptr) {
+                    if(collider->CollideWith(Vector2(x, y))) {
+                        buffers[static_cast<int>(gameObject.GetGfx()->GetLayer())][y][x].Attributes = BACKGROUND_GREEN;
+                        buffers[static_cast<int>(SimpleGraphics::Layer::BACKGROUND)][y][x].Attributes = BACKGROUND_GREEN;
+                    }
+                }
+            }
+        }
+
+    }
+
+}
+
+template<int WIDTH, int HEIGHT>
+void AsciiRenderer<WIDTH, HEIGHT>::SetShowColliders(bool showColliders) {
+    AsciiRenderer::showColliders = showColliders;
+}
+
+template<int WIDTH, int HEIGHT>
+bool AsciiRenderer<WIDTH, HEIGHT>::IsShowColliders() const {
+    return showColliders;
 }
 
 

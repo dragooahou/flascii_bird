@@ -10,7 +10,7 @@ ScoreDisplayer::ScoreDisplayer() {
 
 }
 
-ScoreDisplayer::ScoreDisplayer(Vector2 &position, AsciiSprite** fontSprite, IGraphics::Layer renderLayer) {
+ScoreDisplayer::ScoreDisplayer(const Vector2 &position, AsciiSprite** fontSprite, IGraphics::Layer renderLayer) {
 
 	SetPosition(position);
 	for (int i = 0; i < 3; i++) {
@@ -23,7 +23,7 @@ ScoreDisplayer::ScoreDisplayer(Vector2 &position, AsciiSprite** fontSprite, IGra
 
 }
 
-void ScoreDisplayer::Move(Vector2 &position){
+void ScoreDisplayer::Move(const Vector2 &position){
 	
 	for (int i = 0; i < 3; i++) {
 		displayer[i].SetPosition(Vector2(position.x + 9 * i, position.y));

@@ -2,6 +2,7 @@
 
 #include "Vector2.h"
 #include "SimpleGraphics.h"
+#include "Colliders.h"
 
 class GameObject {
 
@@ -29,5 +30,8 @@ public:
     GfxPtr GetGfx() const;
     void SetGfx(GfxPtr gfx);
 
-    bool CollideWith(const GameObject& other, bool filterSpaces = false);
+    bool CollideWith(const GameObject& other) const;
+
+    // Return null if no collider
+    virtual const Colliders::ICollider* GetCollider() const;
 };
