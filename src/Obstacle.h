@@ -6,9 +6,13 @@ class Obstacle : public GameObject {
 
     Colliders::Compound collider;
 
+private:
+	float fallingSpeed = -0.3f;
+	float offset = 26.f;
+
 public:
 
-	static constexpr float scrollingSpeed = 1.f;
+	static constexpr float scrollingSpeed = 2.f;
 
 
 	Obstacle();

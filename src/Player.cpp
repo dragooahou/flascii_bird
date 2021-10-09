@@ -24,7 +24,7 @@ void Player::Update(const InputManager& inputManager, NYTimer& timer) {
 		acceleration = 0.f;
 		velocity = 0.f;
 		velocity -= jumpForce;
-		acceleration += jumpForce;
+		acceleration -= jumpForce/3;
 
 	}
 
@@ -51,7 +51,7 @@ void Player::Update(const InputManager& inputManager, NYTimer& timer) {
 
 
     // DEBUG TODO A VIRER
-
+	/*
     if (inputManager.getVirtualKeyState(VK_RIGHT) == InputManager::Input::PRESSED) {
         velocityVector.x += 1.f;
     }
@@ -63,7 +63,7 @@ void Player::Update(const InputManager& inputManager, NYTimer& timer) {
     // END DEBUG
 
 
-
+	*/
     SetPosition(pos + velocityVector);
 
     collider.position = GetPosition() - collider.size/2.f;

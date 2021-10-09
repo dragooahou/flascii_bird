@@ -10,6 +10,8 @@
 #include "Obstacle.h"
 #include "ScoreDisplayer.h"
 #include "TextureGraphics.h"
+#include "BackgroundObject.h"
+
 
 #define SCREEN_WIDTH    240
 #define SCREEN_HEIGHT   66
@@ -31,8 +33,14 @@ private:
 	AsciiSprite* obstacleSprite;
 	AsciiSprite* gameOverSprite;
 	AsciiSprite* scoreSprite[10];
+	AsciiSprite* backgroundSprite[4];
+	AsciiSprite* starSprite[3];
+	AsciiSprite* moonSprite;
 	GameObject gameOverDisplay;
 	Obstacle obstacle[OBSTACLE_AMOUNT];
+	BackgroundObject backgroundObject[4];
+	BackgroundObject moon;
+	BackgroundObject starObject[8];
 	ScoreDisplayer scoreDisplayer;
 
 

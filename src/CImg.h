@@ -52155,7 +52155,7 @@ namespace cimg_library_suffixed {
                                 filename);
         }
 
-        const char *const f_type = cimg::ftype(file,filename);
+         const char *const f_type = cimg::ftype(file,filename);
         cimg::fclose(file);
         is_loaded = true;
         try {

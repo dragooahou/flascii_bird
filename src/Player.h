@@ -18,9 +18,9 @@ public:
 
 private:
 
-	static constexpr float gravity = 0.0980f;
-	static constexpr float jumpForce = 0.8f;
-	static constexpr float velocityCap = 0.8f;
+	static constexpr float gravity = 0.3f;
+	static constexpr float jumpForce = 3.f;
+	static constexpr float velocityCap = 1.1f;
 	float acceleration;
 	float velocity;
 };

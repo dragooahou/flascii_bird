@@ -21,7 +21,10 @@ set(SOURCES
         src/IGraphics.cpp           src/IGraphics.h
         src/TextureGraphics.cpp     src/TextureGraphics.h
         src/ScoreDisplayer.cpp      src/ScoreDisplayer.h
-        src/GameManager.cpp         src/GameManager.h src/Colliders.cpp src/Colliders.h)
+        src/GameManager.cpp         src/GameManager.h
+        src/Colliders.cpp           src/Colliders.h
+        src/BackgroundObject.cpp    src/BackgroundObject.h)
+            
 
 add_executable(projet_ascii ${SOURCES})
 

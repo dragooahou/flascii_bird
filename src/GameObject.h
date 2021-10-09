@@ -4,6 +4,8 @@
 #include "SimpleGraphics.h"
 #include "Colliders.h"
 
+#define SPEED 2.f
+
 class GameObject {
 
 public:
