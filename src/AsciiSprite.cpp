@@ -24,10 +24,11 @@ AsciiSprite::AsciiSprite(const string& filename) {
 		i++;
 	}
 
-	asciiArt = Matrix<char>(height, width);
+	asciiArt = Matrix<CHAR_INFO>(height, width);
 	for (int i = 0; i < height-1; i++) {
 		for (int j = 0; j < width; j++) {
-			asciiArt(i, j) = asciiTab[i][j];
+			asciiArt(i, j).Char.AsciiChar = asciiTab[i][j];
+            asciiArt(i, j).Attributes = FG_WHITE | BG_BLACK;
 		}
 	}
 
@@ -35,20 +36,21 @@ AsciiSprite::AsciiSprite(const string& filename) {
 
 AsciiSprite::AsciiSprite(int height, int width) : height(height), width(width) {
 
-    asciiArt = Matrix<char>(height, width);
+    asciiArt = Matrix<CHAR_INFO>(height, width);
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
-            asciiArt(i, j) = ' ';
+            asciiArt(i, j).Char.AsciiChar = ' ';
+            asciiArt(i, j).Attributes = FG_WHITE | BG_BLACK;
         }
     }
 
 }
 
-AsciiSprite::AsciiSprite(const Matrix<char> &matrix) : asciiArt(matrix), height(matrix.GetHeight()), width(matrix.GetWidth()) {
+AsciiSprite::AsciiSprite(const Matrix<CHAR_INFO> &matrix) : asciiArt(matrix), height(matrix.GetHeight()), width(matrix.GetWidth()) {
 	
 }
 
-const Matrix<char>& AsciiSprite::GetAsciiArt() const {
+const Matrix<CHAR_INFO>& AsciiSprite::GetAsciiArt() const {
     return asciiArt;
 }
 
@@ -65,7 +67,7 @@ AsciiSprite::~AsciiSprite() {
 }
 
 void AsciiSprite::SetChar(int x, int y, char c) {
-    asciiArt[y][x] = c;
+    asciiArt[y][x].Char.AsciiChar = c;
 }
 
 AsciiSprite::AsciiSprite() : asciiArt(), height(asciiArt.GetHeight()), width(asciiArt.GetWidth()) {

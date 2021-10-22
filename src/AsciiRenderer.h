@@ -89,15 +89,14 @@ void AsciiRenderer<WIDTH, HEIGHT>::Render(const GameObject &gameObject) {
             int yPos = static_cast<int>(goPosition.y) + y - static_cast<int>(spriteCenterOffset.y);
             int xPos = static_cast<int>(goPosition.x) + x - static_cast<int>(spriteCenterOffset.x);
 
-            int c = spriteToRender->GetAsciiArt()(y, x);
+            CHAR_INFO c = spriteToRender->GetAsciiArt()(y, x);
 
             // Filter pixels that are outside the screen or spaces
-            if(xPos >= WIDTH || xPos < 0 || yPos >= HEIGHT || yPos < 0 || c == ' ') {
+            if(xPos >= WIDTH || xPos < 0 || yPos >= HEIGHT || yPos < 0 || c.Char.AsciiChar == ' ') {
                 continue;
             }
 
-            buffers[static_cast<int>(gameObject.GetGfx()->GetLayer())][yPos][xPos]
-                   .Char.AsciiChar = c;
+            buffers[static_cast<int>(gameObject.GetGfx()->GetLayer())][yPos][xPos] = c;
 
         }
     }
