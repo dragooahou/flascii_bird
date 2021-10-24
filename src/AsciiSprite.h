@@ -29,6 +29,7 @@ public:
     static constexpr Color FG_LIGHTMAGENTA = FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_INTENSITY;
     static constexpr Color FG_LIGHTCYAN = FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY;
     static constexpr Color FG_BLACK = 0;
+    static constexpr Color FG_GRAY = FOREGROUND_INTENSITY;
     static constexpr Color FG_WHITE =  FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE;
 
     static constexpr Color BG_RED = BACKGROUND_RED;
@@ -44,6 +45,7 @@ public:
     static constexpr Color BG_LIGHTMAGENTA = BACKGROUND_BLUE | BACKGROUND_RED | BACKGROUND_INTENSITY;
     static constexpr Color BG_LIGHTCYAN = BACKGROUND_GREEN | BACKGROUND_BLUE | BACKGROUND_INTENSITY;
     static constexpr Color BG_BLACK = 0;
+    static constexpr Color BG_GRAY = FOREGROUND_INTENSITY;
     static constexpr Color BG_WHITE =  BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE;
 
     AsciiSprite();

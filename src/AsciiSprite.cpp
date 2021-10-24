@@ -26,6 +26,7 @@ using namespace std;
             {"lightcyan", AsciiSprite::prefix##_LIGHTCYAN},             \
                                                                         \
             {"black", AsciiSprite::prefix##_BLACK},                     \
+            {"gray", AsciiSprite::prefix##_GRAY},                       \
             {"white", AsciiSprite::prefix##_WHITE},                     \
     };                                                                  \
 
