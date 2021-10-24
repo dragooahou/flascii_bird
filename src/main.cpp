@@ -16,16 +16,9 @@ int main() {
     GameManager gameManager;
 
     while (gameManager.isRunning) {
-        if (gameManager.state == GameManager::GameState::RUNNING) {
-            gameManager.Update();
-            gameManager.Render();
-        }
-        else if (gameManager.state == GameManager::GameState::GAMEOVER) {
-            gameManager.GameOver();
-        }
-        else if (gameManager.state == GameManager::GameState::SCOREBOARD) {
-            //TODO
-        }
+
+        gameManager.Update();
+        gameManager.Render();
         
         Sleep(16);
     }

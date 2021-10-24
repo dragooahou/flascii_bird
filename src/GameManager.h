@@ -17,6 +17,15 @@
 #define SCREEN_HEIGHT   66
 #define OBSTACLE_AMOUNT 2
 #define OBSTACLE_OFFSET 120
+#define OBSTACLE_OFFSET_Y 30
+#define INGAME_ANCHOR_X 112
+#define INGAME_ANCHOR_Y 12
+#define GAMEOVER_ANCHOR_X 135
+#define GAMEOVER_ANCHOR_Y 36
+#define RANDOM_BG_MAX 30
+#define CLOUDS_AMOUNT 4
+#define STARS_AMOUNT 8
+#define DEBUG_MODE 1
 
 
 
@@ -24,18 +33,26 @@ class GameManager {
 
 
 private:
+
+	enum {
+		PLAYER = 0,
+		OBSTACLE = 1,
+		GAMEOVER = 2,
+		SCORE = 3, // size 10
+		CLOUD = 13, // size 4
+		STAR = 17, // size 3
+		MOON = 20,
+		TITLE = 21,
+		SIZE = 22
+	};
+
 	int score;
 	InputManager inputManager;
 	Player player;
 	NYTimer timer;
 	AsciiRenderer<SCREEN_WIDTH, SCREEN_HEIGHT> renderer;
-	AsciiSprite* playerSprite;
-	AsciiSprite* obstacleSprite;
-	AsciiSprite* gameOverSprite;
-	AsciiSprite* scoreSprite[10];
-	AsciiSprite* backgroundSprite[4];
-	AsciiSprite* starSprite[3];
-	AsciiSprite* moonSprite;
+	AsciiSprite* sprite[SIZE];
+	GameObject titleDisplayer;
 	GameObject gameOverDisplay;
 	Obstacle obstacle[OBSTACLE_AMOUNT];
 	BackgroundObject backgroundObject[4];
@@ -50,7 +67,8 @@ public:
 		RUNNING,
 		GAMEOVER,
 		SCOREBOARD,
-		ENDING
+		ENDING,
+		TITLE
 	};
 
 	bool isRunning = false;
@@ -59,7 +77,6 @@ public:
 	GameManager();
 	void Update();
 	void Render();
-	void GameOver();
-	void Reset();
+	void CreateSpriteChain(int startingIndex, int size, std::string pathPrefix);
 
 };

@@ -15,7 +15,7 @@ InputManager::InputManager() {
 
 void InputManager::ListenToUserInput() {
 
-	for (int i = 0; i < 256; i++) {
+	for (int i = 0; i < KEYBOARD_SIZE; i++) {
 		newKeyState[i] = GetAsyncKeyState(i);
 
 		//if the key is held down
