@@ -4,8 +4,8 @@
   |
 
 3
-0 yellow
-1 lightyellow
+0 cyan
+1 lightcyan
 2 black
 
 00000

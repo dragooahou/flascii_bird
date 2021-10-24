@@ -2,6 +2,6 @@
 *
 
 1
-0 red
+0 lightcyan
 
 0

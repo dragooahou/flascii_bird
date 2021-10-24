@@ -3,7 +3,7 @@ _\/_
  /\
 
 1
-0 lightyellow
+0 lightcyan
 
 0000
 0000
