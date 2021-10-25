@@ -34,6 +34,7 @@ GameManager::GameManager() {
 
     isRunning = true;
     state = GameManager::GameState::TITLE;
+    Init();
 
 }
 
@@ -102,6 +103,8 @@ void GameManager::Update() {
                 state = GameState::RUNNING;
             }
 
+            for (int i = 0; i < STARS_AMOUNT; i++) starObject[i].Update();
+
             break;
     }
 
@@ -135,6 +138,7 @@ void GameManager::Render() {
         case (GameState::TITLE):
 
             renderer.Render(titleDisplayer);
+            for (int i = 0; i < STARS_AMOUNT; i++) renderer.Render(starObject[i]);
             break;
 
     }
