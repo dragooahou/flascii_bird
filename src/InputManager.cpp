@@ -45,3 +45,8 @@ void InputManager::ListenToUserInput() {
 	return keyState[vk];
 }
 
+InputManager &InputManager::GetInstance() {
+    static InputManager inputManager;
+    return inputManager;
+}
+

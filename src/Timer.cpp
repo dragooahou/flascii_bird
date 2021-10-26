@@ -1,7 +1,7 @@
 #include <Windows.h>
-#include "NYTimer.h"
+#include "Timer.h"
 
-NYTimer::NYTimer()
+Timer::Timer()
 {
 	QueryPerformanceCounter(&lastUpdateTime);
 	LARGE_INTEGER li_freq;
@@ -10,12 +10,12 @@ NYTimer::NYTimer()
 	freq /= 1000;
 }
 
-void NYTimer::start(void)
+void Timer::Start()
 {
 	QueryPerformanceCounter(&lastUpdateTime);
 }
 
-float NYTimer::getElapsedSeconds(bool restart = false)
+float Timer::GetElapsedSeconds(bool restart = false)
 {
 	LARGE_INTEGER timeNow;
 	QueryPerformanceCounter(&timeNow);
@@ -30,7 +30,7 @@ float NYTimer::getElapsedSeconds(bool restart = false)
 	return elapsed;
 }
 
-unsigned long NYTimer::getElapsedMs(bool restart = false)
+unsigned long Timer::GetElapsedMs(bool restart = false)
 {
 	LARGE_INTEGER timeNow;
 	QueryPerformanceCounter(&timeNow);
@@ -38,4 +38,9 @@ unsigned long NYTimer::getElapsedMs(bool restart = false)
 
 	unsigned long elapsed = (unsigned long)((float)elapsedLong / (float)freq);
 	return elapsed;
+}
+
+Timer &Timer::GetInstance() {
+    static Timer nyTimer;
+    return nyTimer;
 }

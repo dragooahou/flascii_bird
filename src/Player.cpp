@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <Windows.h>
-#include "NYTimer.h"
+#include "Timer.h"
 
 #include "Player.h"
 
@@ -17,7 +17,7 @@ Player::Player(Vector2 position, GfxPtr gfx) : GameObject(position, gfx)
     collider.size = Vector2(18, 8);
 }
 
-void Player::Update(const InputManager& inputManager, NYTimer& timer) {
+void Player::Update(const InputManager& inputManager, Timer& timer) {
 
 	if (inputManager.getVirtualKeyState(VK_SPACE) == InputManager::Input::JUST_PRESSED) {
 
@@ -33,7 +33,7 @@ void Player::Update(const InputManager& inputManager, NYTimer& timer) {
 	acceleration += gravity;
 
 
-	velocity = initialVelocity + (acceleration * timer.getElapsedSeconds(true));
+	velocity = initialVelocity + (acceleration * timer.GetElapsedSeconds(true));
 
 	if (velocity >= velocityCap) {
 		velocity = velocityCap;

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "InputManager.h"
-#include "NYTimer.h"
+#include "Timer.h"
 #include "AsciiSprite.h"
 #include "utils.h"
 #include "AsciiRenderer.h"
@@ -47,9 +47,9 @@ private:
 	};
 
 	int score;
-	InputManager inputManager;
+	InputManager& inputManager;
 	Player player;
-	NYTimer timer;
+	Timer& timer;
 	AsciiRenderer<SCREEN_WIDTH, SCREEN_HEIGHT> renderer;
 	AsciiSprite* sprite[SIZE];
 	GameObject titleDisplayer;

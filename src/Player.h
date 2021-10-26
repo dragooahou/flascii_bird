@@ -12,7 +12,7 @@ public:
 	Player();
 	Player(Vector2 position, GfxPtr gfx);
 
-	void Update(const InputManager& inputManager, NYTimer& timer);
+	void Update(const InputManager& inputManager, Timer& timer);
 
     const Colliders::ICollider *GetCollider() const override;
 

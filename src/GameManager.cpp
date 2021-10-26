@@ -9,12 +9,11 @@
 
 
 
-GameManager::GameManager() {
+GameManager::GameManager() : timer(Timer::GetInstance()), inputManager(InputManager::GetInstance()) {
 
     srand(time(NULL));
 
-    timer = NYTimer();
-    timer.start();
+    timer.Start();
 
     sprite[OBSTACLE] = new AsciiSprite("assets/obstacle.txt");
     sprite[GAMEOVER] = new AsciiSprite("assets/gameover.txt");
@@ -27,8 +26,6 @@ GameManager::GameManager() {
 
     titleDisplayer = GameObject({ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 }, (std::make_shared<SimpleGraphics>(std::vector{ sprite[TITLE] }, IGraphics::Layer::UI)));
     gameOverDisplay = GameObject({ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 }, (std::make_shared<SimpleGraphics>(std::vector{ sprite[GAMEOVER] }, IGraphics::Layer::UI)));
-
-    inputManager = InputManager();
 
     scoreDisplayer = ScoreDisplayer(Vector2(INGAME_ANCHOR_X, INGAME_ANCHOR_Y), &sprite[SCORE], IGraphics::Layer::UI);
 

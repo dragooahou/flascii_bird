@@ -16,7 +16,7 @@ set(SOURCES
                                     src/Matrix.h
                                     src/CImg.h
         src/Player.cpp	            src/Player.h
-        src/NYTimer.cpp		        src/NYTimer.h
+        src/Timer.cpp src/Timer.h
         src/Obstacle.cpp            src/Obstacle.h
         src/IGraphics.cpp           src/IGraphics.h
         src/TextureGraphics.cpp     src/TextureGraphics.h
