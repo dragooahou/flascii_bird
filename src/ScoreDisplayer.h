@@ -6,16 +6,16 @@
 class ScoreDisplayer : public GameObject {
 
 public:
-	ScoreDisplayer();
-	ScoreDisplayer(const Vector2 &position, AsciiSprite** fontSprite, IGraphics::Layer renderLayer);
+	ScoreDisplayer() = default;
+	ScoreDisplayer(const Vector2 &position, AsciiSprite* sprite, GfxPtr gfx, const std::vector<GameObject*> &displayer);
 	void Move(const Vector2& position);
 
-	void Update(int score);
-	GameObject GetDisplayer(int i);
+	void Update() override;
+	GameObject* GetDisplayer(int i);
 
 private:
 
 	IGraphics::Layer layer = IGraphics::Layer::UI;
-	GameObject displayer[3];
+	std::vector<GameObject*> displayer;
 	AsciiSprite sprite[10];
 };

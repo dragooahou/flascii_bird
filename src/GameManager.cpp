@@ -6,14 +6,17 @@
 #include <windows.h>
 #include <string>
 #include <iostream>
+#include "Scene.h"
+#include "TitleScene.h"
+#include "GameOverScene.h"
+#include "GameScene.h"
 
 
 
-GameManager::GameManager() : timer(Timer::GetInstance()), inputManager(InputManager::GetInstance()) {
+GameManager::GameManager() : inputManager(InputManager::GetInstance()) {
 
     srand(time(NULL));
-
-    timer.Start();
+    Timer::GetInstance().Start();
 
     sprite[OBSTACLE] = new AsciiSprite("assets/obstacle.txt");
     sprite[GAMEOVER] = new AsciiSprite("assets/gameover.txt");
@@ -24,158 +27,103 @@ GameManager::GameManager() : timer(Timer::GetInstance()), inputManager(InputMana
     CreateSpriteChain(STAR, 3, "assets/stars/star_");
     CreateSpriteChain(SCORE, 10, "assets/ascii_fonts/spliff_");
 
-    titleDisplayer = GameObject({ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 }, (std::make_shared<SimpleGraphics>(std::vector{ sprite[TITLE] }, IGraphics::Layer::UI)));
-    gameOverDisplay = GameObject({ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 }, (std::make_shared<SimpleGraphics>(std::vector{ sprite[GAMEOVER] }, IGraphics::Layer::UI)));
-
-    scoreDisplayer = ScoreDisplayer(Vector2(INGAME_ANCHOR_X, INGAME_ANCHOR_Y), &sprite[SCORE], IGraphics::Layer::UI);
-
     isRunning = true;
-    state = GameManager::GameState::TITLE;
-    Init();
 
+    // Init Title Scene
+    std::vector<GameObject*> titleGameObjects;
+    for (int i = 0; i < 12; i++) {
+        titleGameObjects.push_back(new BackgroundObject(1000.f,
+            { SCREEN_WIDTH * (rand() / (float)RAND_MAX) + RANDOM_BG_MAX, (rand() / (float)RAND_MAX) * SCREEN_HEIGHT },
+            (std::make_shared<SimpleGraphics>(std::vector{ sprite[STAR + (i % 3)] }, IGraphics::Layer::BACKGROUND))));
+    }
+    titleGameObjects.push_back(new GameObject({ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 }, (std::make_shared<SimpleGraphics>(std::vector{ sprite[TITLE] }, IGraphics::Layer::UI))));
+    scenes.push_back(new TitleScene(titleGameObjects, 0));
+
+    // Init Game Scene
+    std::vector<GameObject*> mainGameObjects;
+    Player* player = new Player({ 50,33 }, std::make_shared<TextureGraphics>("assets/flappy_bird.bmp", IGraphics::Layer::OBJECTS));
+    mainGameObjects.push_back(player);
+    for (int i = 0; i < OBSTACLE_AMOUNT; i++) {
+        float randomRatio = (rand() / (float)RAND_MAX) - 0.5f;
+        mainGameObjects.push_back(new Obstacle(
+            player,
+            { (float)(SCREEN_WIDTH + (OBSTACLE_OFFSET * i)), SCREEN_HEIGHT / 2 + (randomRatio * (SCREEN_HEIGHT / 4) - (OBSTACLE_OFFSET_Y * (i + 1))) },
+            (std::make_shared<SimpleGraphics>(std::vector{ sprite[OBSTACLE] }, IGraphics::Layer::OBJECTS)))
+        );
+    }
+    for (int i = 0; i < STARS_AMOUNT; i++) {
+        mainGameObjects.push_back(new BackgroundObject(1000.f,
+            { SCREEN_WIDTH * (rand() / (float)RAND_MAX) + RANDOM_BG_MAX, (rand() / (float)RAND_MAX) * SCREEN_HEIGHT },
+            (std::make_shared<SimpleGraphics>(std::vector{ sprite[STAR + (i % 3)] }, IGraphics::Layer::BACKGROUND))));
+    }
+    for (int i = 0; i < CLOUDS_AMOUNT; i++) {
+        mainGameObjects.push_back(new BackgroundObject(1 + (float)i,
+            { SCREEN_WIDTH * (rand() / (float)RAND_MAX) + RANDOM_BG_MAX, (rand() / (float)RAND_MAX) * SCREEN_HEIGHT },
+            (std::make_shared<SimpleGraphics>(std::vector{ sprite[CLOUD + i] }, IGraphics::Layer::BACKGROUND))));
+    }
+    mainGameObjects.push_back(new BackgroundObject(10000.f,
+        { SCREEN_WIDTH * (rand() / (float)RAND_MAX) + RANDOM_BG_MAX, 10 },
+        (std::make_shared<SimpleGraphics>(std::vector{ sprite[MOON] }, IGraphics::Layer::BACKGROUND))));
+    std::vector<GameObject*> digit(NB_DIGITS);
+    for (int i = 0; i < NB_DIGITS; i++) {
+        digit[i] = new GameObject({ INGAME_ANCHOR_X + ((float)i * 7), INGAME_ANCHOR_Y }, (std::make_shared<SimpleGraphics>(std::vector{ sprite[SCORE] }, IGraphics::Layer::UI)));
+        mainGameObjects.push_back(digit[i]);
+    }
+    mainGameObjects.push_back(new ScoreDisplayer(Vector2(INGAME_ANCHOR_X, INGAME_ANCHOR_Y), sprite[SCORE], (std::make_shared<SimpleGraphics>(std::vector{ sprite[SCORE] }, IGraphics::Layer::UI)), digit));
+
+    scenes.push_back(new GameScene(mainGameObjects, 1));
+
+    // Init GameOver Scene
+    std::vector<GameObject*> gameOverGameObjects;
+    for (int i = 0; i < 12; i++) {
+        gameOverGameObjects.push_back(new BackgroundObject(1000.f,
+            { SCREEN_WIDTH * (rand() / (float)RAND_MAX) + RANDOM_BG_MAX, (rand() / (float)RAND_MAX) * SCREEN_HEIGHT },
+            (std::make_shared<SimpleGraphics>(std::vector{ sprite[STAR + (i % 3)] }, IGraphics::Layer::BACKGROUND))));
+    }
+    gameOverGameObjects.push_back(new GameObject({ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 }, (std::make_shared<SimpleGraphics>(std::vector{ sprite[GAMEOVER] }, IGraphics::Layer::UI))));
+    std::vector<GameObject*> digits(NB_DIGITS);
+    for (int i = 0; i < NB_DIGITS; i++) {
+        digits[i] = new GameObject({ GAMEOVER_ANCHOR_X + ((float)i * 7), GAMEOVER_ANCHOR_Y }, (std::make_shared<SimpleGraphics>(std::vector{ sprite[SCORE] }, IGraphics::Layer::UI)));
+        mainGameObjects.push_back(digits[i]);
+    }
+    mainGameObjects.push_back(new ScoreDisplayer(Vector2(GAMEOVER_ANCHOR_X, GAMEOVER_ANCHOR_Y), sprite[SCORE], (std::make_shared<SimpleGraphics>(std::vector{ sprite[SCORE] }, IGraphics::Layer::UI)), digits));
+
+    scenes.push_back(new GameOverScene(gameOverGameObjects, 2));
+
+    LoadScene(0);
 }
 
 void GameManager::Update() {
 
-    inputManager.ListenToUserInput();
-
-    switch (state) {
-
-        case (GameState::RUNNING):
-
-            if (inputManager.getVirtualKeyState(VK_ESCAPE) == InputManager::Input::JUST_PRESSED) {
-                state = GameState::TITLE;
-                break;
-            }
-
-            if (inputManager.getVirtualKeyState(VK_F3) == InputManager::Input::JUST_PRESSED && DEBUG_MODE) {
-                renderer.SetShowColliders(!renderer.IsShowColliders());
-            }
-
-            for (int i = 0; i < OBSTACLE_AMOUNT; i++) {
-                obstacle[i].Update(SCREEN_WIDTH, SCREEN_HEIGHT);
-                if ((obstacle[i].GetPosition().x <= player.GetPosition().x) && !obstacle[i].isAlreadyChecked) {
-                    score++;
-                    obstacle[i].isAlreadyChecked = true;
-                }
-                if (player.CollideWith(obstacle[i]) && (inputManager.getVirtualKeyState(VK_LCONTROL) == InputManager::Input::RELEASED) && DEBUG_MODE) {
-                    scoreDisplayer.Move(Vector2(GAMEOVER_ANCHOR_X, GAMEOVER_ANCHOR_Y));
-                    state = GameState::GAMEOVER;
-                }
-            }
-
-            for (int i = 0; i < CLOUDS_AMOUNT; i++) {
-                backgroundObject[i].Update();
-            }
-            for (int i = 0; i < STARS_AMOUNT; i++) {
-                starObject[i].Update();
-            }
-            moon.Update();
-            player.Update(inputManager, timer);
-            scoreDisplayer.Update(score);
-            break;
-
-        case (GameState::GAMEOVER):
-
-            if (inputManager.getVirtualKeyState(VK_ESCAPE) == InputManager::Input::JUST_PRESSED) {
-                state = GameState::TITLE;
-            }
-            if (inputManager.getVirtualKeyState(VK_SPACE) == InputManager::Input::JUST_PRESSED) {
-                scoreDisplayer.Move(Vector2(INGAME_ANCHOR_X, INGAME_ANCHOR_Y));
-                Init();
-                state = GameState::RUNNING;
-            }
-
-            break;
-
-        case (GameState::TITLE):
-
-            if (inputManager.getVirtualKeyState(VK_ESCAPE) == InputManager::Input::JUST_PRESSED) {
-                state = GameState::ENDING;
-                isRunning = false;
-            }
-            if (inputManager.getVirtualKeyState(VK_SPACE) == InputManager::Input::JUST_PRESSED) {
-                scoreDisplayer.Move(Vector2(INGAME_ANCHOR_X, INGAME_ANCHOR_Y));
-                Init();
-                state = GameState::RUNNING;
-            }
-
-            for (int i = 0; i < STARS_AMOUNT; i++) starObject[i].Update();
-
-            break;
-    }
+    currentScene->Update();
 
 }
 
 void GameManager::Render() {
 
     renderer.Clear();
-
-    switch (state) {
-
-        case (GameState::RUNNING):
-
-            for (int i = 0; i < OBSTACLE_AMOUNT; i++) renderer.Render(obstacle[i]);
-            renderer.Render(player);
-            for (int i = 0; i < 3; i++) renderer.Render(scoreDisplayer.GetDisplayer(i));
-            for (int i = 0; i < STARS_AMOUNT; i++) renderer.Render(starObject[i]);
-            renderer.Render(moon);
-            for (int i = 0; i < CLOUDS_AMOUNT; i++) renderer.Render(backgroundObject[i]);
-            break;
-
-        case (GameState::GAMEOVER):
-
-            renderer.Render(gameOverDisplay);
-            for (int i = 0; i < 3; i++) renderer.Render(scoreDisplayer.GetDisplayer(i));
-            for (int i = 0; i < STARS_AMOUNT; i++) renderer.Render(starObject[i]);
-            renderer.Render(moon);
-            for (int i = 0; i < CLOUDS_AMOUNT; i++) renderer.Render(backgroundObject[i]);
-            break;
-
-        case (GameState::TITLE):
-
-            renderer.Render(titleDisplayer);
-            for (int i = 0; i < STARS_AMOUNT; i++) renderer.Render(starObject[i]);
-            break;
-
+    for (GameObject* go : currentScene->gameObjects) {
+        renderer.Render(*go);
     }
 
     renderer.Present();
 
 }
 
+void GameManager::LoadScene(int n)
+{
 
-void GameManager::Init() {
-
-    player = Player({ 50,33 }, std::make_shared<TextureGraphics>("assets/flappy_bird.bmp", IGraphics::Layer::OBJECTS));
-
-    for (int i = 0; i < OBSTACLE_AMOUNT; i++) {
-        float randomRatio = (rand() / (float)RAND_MAX) - 0.5f;
-        obstacle[i] = Obstacle(
-            { (float)(SCREEN_WIDTH + (OBSTACLE_OFFSET * i)), SCREEN_HEIGHT / 2 + (randomRatio * (SCREEN_HEIGHT / 4) - (OBSTACLE_OFFSET_Y * (i+1))) },
-            (std::make_shared<SimpleGraphics>(std::vector{ sprite[OBSTACLE] }, IGraphics::Layer::OBJECTS))
-        );
-
-    }
-    for (int i = 0; i < CLOUDS_AMOUNT; i++) {
-        backgroundObject[i] = BackgroundObject(1 + (float)i,
-            { SCREEN_WIDTH * (rand() / (float)RAND_MAX) + RANDOM_BG_MAX, (rand() / (float)RAND_MAX) * SCREEN_HEIGHT },
-            (std::make_shared<SimpleGraphics>(std::vector{ sprite[CLOUD + i] }, IGraphics::Layer::BACKGROUND)));
-    }
-
-    moon = BackgroundObject(10000.f,
-        { SCREEN_WIDTH * (rand() / (float)RAND_MAX) + RANDOM_BG_MAX, 10 },
-        (std::make_shared<SimpleGraphics>(std::vector{sprite[MOON] }, IGraphics::Layer::BACKGROUND)));
-
-    for (int i = 0; i < 8; i++) {
-        starObject[i] = BackgroundObject(1000.f,
-            { SCREEN_WIDTH * (rand() / (float)RAND_MAX) + RANDOM_BG_MAX, (rand() / (float)RAND_MAX) * SCREEN_HEIGHT },
-            (std::make_shared<SimpleGraphics>(std::vector{ sprite[STAR + (i % 3)] }, IGraphics::Layer::BACKGROUND)));
-    }
-
-    score = 0;
-
+    currentScene = scenes[n];
 }
+
+
+GameManager& GameManager::GetInstance()
+{
+    static GameManager gameManager;
+    return gameManager;
+}
+
+
 
 void GameManager::CreateSpriteChain(int startingIndex, int size, std::string pathPrefix)
 {

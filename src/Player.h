@@ -12,12 +12,13 @@ public:
 	Player();
 	Player(Vector2 position, GfxPtr gfx);
 
-	void Update(const InputManager& inputManager, Timer& timer);
+	void Update() override;
 
     const Colliders::ICollider *GetCollider() const override;
 
 private:
 
+	int score = 0;
 	static constexpr float gravity = 0.3f;
 	static constexpr float jumpForce = 3.f;
 	static constexpr float velocityCap = 1.1f;

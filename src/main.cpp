@@ -13,12 +13,11 @@ int main() {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT);
     InitCImg();
 
-    GameManager gameManager;
 
-    while (gameManager.isRunning) {
+    while (GameManager::GetInstance().isRunning) {
 
-        gameManager.Update();
-        gameManager.Render();
+        GameManager::GetInstance().Update();
+        GameManager::GetInstance().Render();
         
         Sleep(16);
     }

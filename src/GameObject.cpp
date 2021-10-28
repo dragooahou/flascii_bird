@@ -15,6 +15,8 @@ GameObject::GameObject(Vector2 position, GfxPtr gfx) {
 }
 
 
+
+
 const Vector2 &GameObject::GetPosition() const {
     return position;
 }
@@ -55,7 +57,8 @@ float GameObject::GetRotation() const {
 }
 
 void GameObject::SetRotation(float rotation) {
-    gfx->SetRotation(rotation);
+    if(gfx)
+        gfx->SetRotation(rotation);
 }
 
 const Colliders::ICollider *GameObject::GetCollider() const {

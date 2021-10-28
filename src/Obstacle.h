@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GameObject.h"
+#include "Player.h"
 
 class Obstacle : public GameObject {
 
@@ -14,13 +15,14 @@ public:
 
 	static constexpr float scrollingSpeed = 2.f;
 
-
+	Player* player;
 	Obstacle();
-	Obstacle(Vector2 position, GfxPtr gfx);
+	Obstacle(Player* player, Vector2 position, GfxPtr gfx);
 
 	bool isAlreadyChecked = false;
+	bool isBehindPlayer = false;
 
-	void Update(float screenWidth, float screenHeight);
+	void Update() override;
 
     const Colliders::ICollider *GetCollider() const override;
 };

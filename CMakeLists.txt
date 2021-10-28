@@ -23,7 +23,11 @@ set(SOURCES
         src/ScoreDisplayer.cpp      src/ScoreDisplayer.h
         src/GameManager.cpp         src/GameManager.h
         src/Colliders.cpp           src/Colliders.h
-        src/BackgroundObject.cpp    src/BackgroundObject.h)
+        src/BackgroundObject.cpp    src/BackgroundObject.h
+        src/Scene.cpp               src/Scene.h
+        src/TitleScene.cpp          src/TitleScene.h
+        src/GameScene.cpp           src/GameScene.h
+        src/GameOverScene.cpp       src/GameOverScene.h)
             
 
 add_executable(projet_ascii ${SOURCES})

@@ -16,22 +16,22 @@ public:
 
 	};
 
-    InputManager(InputManager &other) = delete;
-    void operator=(const InputManager &) = delete;
+	InputManager(InputManager& other) = delete;
+	void operator=(const InputManager&) = delete;
 
 	void ListenToUserInput();
 	Input getVirtualKeyState(int vk) const;
 
-    static InputManager& GetInstance();
+	static InputManager& GetInstance();
 
 
 private:
 
-    InputManager();
+	InputManager();
 
-    short newKeyState[KEYBOARD_SIZE];
-    short oldKeyState[KEYBOARD_SIZE];
+	short newKeyState[KEYBOARD_SIZE];
+	short oldKeyState[KEYBOARD_SIZE];
 
-    Input keyState[KEYBOARD_SIZE];
+	Input keyState[KEYBOARD_SIZE];
 
 };

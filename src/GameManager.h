@@ -11,6 +11,7 @@
 #include "ScoreDisplayer.h"
 #include "TextureGraphics.h"
 #include "BackgroundObject.h"
+#include "Scene.h"
 
 
 #define SCREEN_WIDTH    240
@@ -26,6 +27,7 @@
 #define CLOUDS_AMOUNT 4
 #define STARS_AMOUNT 8
 #define DEBUG_MODE 1
+#define NB_DIGITS 3
 
 
 
@@ -46,37 +48,36 @@ private:
 		SIZE = 22
 	};
 
-	int score;
-	InputManager& inputManager;
-	Player player;
-	Timer& timer;
-	AsciiRenderer<SCREEN_WIDTH, SCREEN_HEIGHT> renderer;
-	AsciiSprite* sprite[SIZE];
-	GameObject titleDisplayer;
-	GameObject gameOverDisplay;
-	Obstacle obstacle[OBSTACLE_AMOUNT];
-	BackgroundObject backgroundObject[4];
-	BackgroundObject moon;
-	BackgroundObject starObject[8];
-	ScoreDisplayer scoreDisplayer;
+	GameManager();
+
+
+
+	
 
 
 public:
 
-	enum class GameState {
-		RUNNING,
-		GAMEOVER,
-		SCOREBOARD,
-		ENDING,
-		TITLE
-	};
+	std::vector<Scene*> scenes;
+	InputManager& inputManager;
+	AsciiRenderer<SCREEN_WIDTH, SCREEN_HEIGHT> renderer;
+	AsciiSprite* sprite[SIZE];
+	Scene* currentScene;
 
+	GameManager(GameManager& other) = delete;
+	void operator=(const GameManager&) = delete;
+
+	static GameManager& GetInstance();
+
+	int score;
 	bool isRunning = false;
-	GameState state;
-	void Init();
-	GameManager();
+	static const int screenWidth = SCREEN_WIDTH;
+	static const int screenHeight = SCREEN_HEIGHT;
+
+
 	void Update();
 	void Render();
+	void LoadScene(int n);
+
 	void CreateSpriteChain(int startingIndex, int size, std::string pathPrefix);
 
 };
