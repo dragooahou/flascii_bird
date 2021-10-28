@@ -77,6 +77,11 @@ void AsciiRenderer<WIDTH, HEIGHT>::Present() {
 template<int WIDTH, int HEIGHT>
 void AsciiRenderer<WIDTH, HEIGHT>::Render(const GameObject &gameObject) {
 
+    // Do not render if the graphic of the gameObject is invalid
+    if(!gameObject.GetGfx()) {
+        return;
+    }
+
     const AsciiSprite* spriteToRender = gameObject.GetGfx()->GetCurrentFrame();
     const Vector2& goPosition = gameObject.GetPosition();
     const int height = spriteToRender->GetHeight();

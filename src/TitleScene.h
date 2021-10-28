@@ -5,8 +5,13 @@
 
 class TitleScene : public Scene {
 
+    constexpr static int STAR_COUNT = 3;
+
+    AsciiSprite starSprites[STAR_COUNT];
+    AsciiSprite titleSprite;
+
 public :
-	TitleScene(std::vector<GameObject*> &gameObjects, int sceneID) : Scene(gameObjects, sceneID) {}
+	TitleScene(int sceneID);
 	void Update() override;
 
 };

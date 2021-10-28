@@ -7,7 +7,7 @@ class ScoreDisplayer : public GameObject {
 
 public:
 	ScoreDisplayer() = default;
-	ScoreDisplayer(const Vector2 &position, AsciiSprite* sprite, GfxPtr gfx, const std::vector<GameObject*> &displayer);
+	ScoreDisplayer(const Vector2 &position, const std::vector<GameObject*> &displayer);
 	void Move(const Vector2& position);
 
 	void Update() override;

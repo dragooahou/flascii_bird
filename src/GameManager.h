@@ -36,18 +36,6 @@ class GameManager {
 
 private:
 
-	enum {
-		PLAYER = 0,
-		OBSTACLE = 1,
-		GAMEOVER = 2,
-		SCORE = 3, // size 10
-		CLOUD = 13, // size 4
-		STAR = 17, // size 3
-		MOON = 20,
-		TITLE = 21,
-		SIZE = 22
-	};
-
 	GameManager();
 
 
@@ -57,11 +45,9 @@ private:
 
 public:
 
-	std::vector<Scene*> scenes;
 	InputManager& inputManager;
 	AsciiRenderer<SCREEN_WIDTH, SCREEN_HEIGHT> renderer;
-	AsciiSprite* sprite[SIZE];
-	Scene* currentScene;
+	Scene* currentScene = nullptr;
 
 	GameManager(GameManager& other) = delete;
 	void operator=(const GameManager&) = delete;
@@ -77,7 +63,5 @@ public:
 	void Update();
 	void Render();
 	void LoadScene(int n);
-
-	void CreateSpriteChain(int startingIndex, int size, std::string pathPrefix);
 
 };

@@ -8,8 +8,8 @@
 
 
 
-ScoreDisplayer::ScoreDisplayer(const Vector2 &position, AsciiSprite* sprite, GfxPtr gfx, const std::vector<GameObject*> &displayer) : GameObject(position, gfx), displayer(displayer) {
-
+ScoreDisplayer::ScoreDisplayer(const Vector2 &position, const std::vector<GameObject*> &displayer) : GameObject(), displayer(displayer) {
+    SetPosition(position);
 }
 
 void ScoreDisplayer::Move(const Vector2 &position){

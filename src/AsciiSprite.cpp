@@ -35,6 +35,8 @@ STR_TO_COLOR_WITH_PREFIX(BG)
 
 AsciiSprite::AsciiSprite(const string& filename) {
 
+    std::cout << "loading " << filename << std::endl;
+
 	ifstream input;
 	input.open(filename);
 	if (!input.is_open()) throw runtime_error("Couldn't open file");

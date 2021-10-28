@@ -5,8 +5,16 @@
 
 class GameOverScene : public Scene {
 
+    constexpr static int STAR_COUNT = 3;
+    constexpr static int DIGIT_COUNT = 10;
+
+    AsciiSprite gameOverSprite;
+    AsciiSprite starSprites[STAR_COUNT];
+    AsciiSprite digitSprites[DIGIT_COUNT];
+
+
 public :
-	GameOverScene(std::vector<GameObject*>& gameObjects, int sceneID) : Scene(gameObjects, sceneID) {}
+	GameOverScene(int sceneID);
 	void Update() override;
 
 };
