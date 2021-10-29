@@ -7,7 +7,7 @@ class ScoreDisplayer : public GameObject {
 
 public:
 	ScoreDisplayer() = default;
-	ScoreDisplayer(const Vector2 &position, const std::vector<GameObject*> &displayer);
+	ScoreDisplayer(const Vector2 &position, const std::vector<GameObject*> &displayer, AsciiSprite* sprite);
 	void Move(const Vector2& position);
 
 	void Update() override;
@@ -17,5 +17,5 @@ private:
 
 	IGraphics::Layer layer = IGraphics::Layer::UI;
 	std::vector<GameObject*> displayer;
-	AsciiSprite sprite[10];
+	AsciiSprite* sprite;
 };

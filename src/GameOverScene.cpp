@@ -29,7 +29,7 @@ GameOverScene::GameOverScene(int sceneID) : Scene(sceneID) {
         gameObjects.push_back(digits[i]);
     }
 
-    gameObjects.push_back(new ScoreDisplayer(Vector2(GAMEOVER_ANCHOR_X, GAMEOVER_ANCHOR_Y), digits));
+    gameObjects.push_back(new ScoreDisplayer(Vector2(GAMEOVER_ANCHOR_X, GAMEOVER_ANCHOR_Y), digits, digitSprites));
 
 }
 
@@ -43,6 +43,6 @@ void GameOverScene::Update()
 		GameManager::GetInstance().LoadScene(1);
 	}
 	if (InputManager::GetInstance().getVirtualKeyState(VK_ESCAPE) == InputManager::Input::JUST_PRESSED) {
-		GameManager::GetInstance().isRunning = false;
+        GameManager::GetInstance().LoadScene(0);
 	}
 }

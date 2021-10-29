@@ -53,7 +53,7 @@ GameScene::GameScene(int sceneID) : Scene(sceneID) {
         gameObjects.push_back(digits[i]);
     }
 
-    gameObjects.push_back(new ScoreDisplayer(Vector2(INGAME_ANCHOR_X, INGAME_ANCHOR_Y), digits));
+    gameObjects.push_back(new ScoreDisplayer(Vector2(INGAME_ANCHOR_X, INGAME_ANCHOR_Y), digits, digitSprites));
 
 }
 

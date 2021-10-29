@@ -8,7 +8,7 @@
 
 
 
-ScoreDisplayer::ScoreDisplayer(const Vector2 &position, const std::vector<GameObject*> &displayer) : GameObject(), displayer(displayer) {
+ScoreDisplayer::ScoreDisplayer(const Vector2 &position, const std::vector<GameObject*> &displayer, AsciiSprite* sprite) : GameObject(), displayer(displayer), sprite(sprite){
     SetPosition(position);
 }
 
@@ -27,7 +27,7 @@ void ScoreDisplayer::Update() {
 	for (int i = 2; i>=0; i--) {
 		p = powf(10, i);
 		result = div(GameManager::GetInstance().score, p);
-		displayer.at(2-i)->SetGfx(std::make_shared<SimpleGraphics>(std::vector{&sprite[result.quot]}, IGraphics::Layer::UI));
+		displayer.at(2-i)->SetGfx(std::make_shared<SimpleGraphics>(std::vector{sprite + result.quot}, IGraphics::Layer::UI));
 		GameManager::GetInstance().score = result.rem;
 	}
 

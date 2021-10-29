@@ -33,7 +33,7 @@ void Obstacle::Update() {
         GameManager::GetInstance().LoadScene(2);
     }
 
-    if (pos.x <= 50.f && !isAlreadyChecked) {
+    if (pos.x <= 50.f && !isBehindPlayer) {
         GameManager::GetInstance().score++;
         isBehindPlayer = true;
     }
@@ -41,7 +41,7 @@ void Obstacle::Update() {
 	if (pos.x <= 0.f) {
 		float randomRatio = (rand()/(float)RAND_MAX) - 0.5f;
 		SetPosition({GameManager::screenWidth, GameManager::screenHeight / 2 + (randomRatio * (GameManager::screenHeight / 2) - offset) });
-        isAlreadyChecked = false;
+        isBehindPlayer = false;
 	}
 
     collider.position = GetPosition() - GetGfx()->GetCurrentFrame()->GetCenterOffset();

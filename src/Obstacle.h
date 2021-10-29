@@ -19,7 +19,6 @@ public:
 	Obstacle();
 	Obstacle(Player* player, Vector2 position, GfxPtr gfx);
 
-	bool isAlreadyChecked = false;
 	bool isBehindPlayer = false;
 
 	void Update() override;
