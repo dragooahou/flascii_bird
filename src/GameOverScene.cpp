@@ -16,12 +16,12 @@ GameOverScene::GameOverScene(int sceneID) : Scene(sceneID) {
     // Init GameOver Scene
     std::vector<GameObject*> gameOverGameObjects;
     for (int i = 0; i < 12; i++) {
-        gameOverGameObjects.push_back(new BackgroundObject(1000.f,
+        gameObjects.push_back(new BackgroundObject(1000.f,
                                                            { SCREEN_WIDTH * (rand() / (float)RAND_MAX) + RANDOM_BG_MAX, (rand() / (float)RAND_MAX) * SCREEN_HEIGHT },
-                                                           (std::make_shared<SimpleGraphics>(std::vector{ &starSprites[i] }, IGraphics::Layer::BACKGROUND))));
+                                                           (std::make_shared<SimpleGraphics>(std::vector{ &starSprites[i % STAR_COUNT] }, IGraphics::Layer::BACKGROUND))));
     }
 
-    gameOverGameObjects.push_back(new GameObject({ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 }, (std::make_shared<SimpleGraphics>(std::vector{ &gameOverSprite }, IGraphics::Layer::UI))));
+    gameObjects.push_back(new GameObject({ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 }, (std::make_shared<SimpleGraphics>(std::vector{ &gameOverSprite }, IGraphics::Layer::UI))));
 
     std::vector<GameObject*> digits(NB_DIGITS);
     for (int i = 0; i < NB_DIGITS; i++) {
