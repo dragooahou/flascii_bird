@@ -28,7 +28,6 @@ void ScoreDisplayer::Update() {
 		p = powf(10, i);
 		result = div(GameManager::GetInstance().score, p);
 		displayer.at(2-i)->SetGfx(std::make_shared<SimpleGraphics>(std::vector{sprite + result.quot}, IGraphics::Layer::UI));
-		GameManager::GetInstance().score = result.rem;
 	}
 
 }

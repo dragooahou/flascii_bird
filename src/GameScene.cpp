@@ -55,6 +55,9 @@ GameScene::GameScene(int sceneID) : Scene(sceneID) {
 
     gameObjects.push_back(new ScoreDisplayer(Vector2(INGAME_ANCHOR_X, INGAME_ANCHOR_Y), digits, digitSprites));
 
+
+    // Set score to 0 (should be stored here actually D:)
+    GameManager::GetInstance().score = 0;
 }
 
 
