@@ -1,21 +1,13 @@
 #include "GameObject.h"
 
-void GameObject::Update() {
 
-}
 
-GameObject::GameObject() : position(), gfx() {
-
-}
-
-GameObject::GameObject(Vector2 position, GfxPtr gfx) {
-    SetPosition(position);
-    SetGfx(gfx);
+/*
+* Basis of every object in the game.
+*/
+GameObject::GameObject(Vector2 position, GfxPtr gfx) : position(position), gfx(gfx) {
     SetRotation(0.f);
 }
-
-
-
 
 const Vector2 &GameObject::GetPosition() const {
     return position;
@@ -33,6 +25,10 @@ void GameObject::SetGfx(GfxPtr gfx) {
     GameObject::gfx = gfx;
 }
 
+
+/*
+* Checks if this object collider is touching another.
+*/
 bool GameObject::CollideWith(const GameObject& other) const {
     // Nothing
     const Colliders::ICollider* otherCollider = other.GetCollider();
@@ -65,3 +61,4 @@ const Colliders::ICollider *GameObject::GetCollider() const {
     return nullptr;
 }
 
+void GameObject::Update() {}

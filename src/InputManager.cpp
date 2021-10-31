@@ -6,13 +6,22 @@
 
 
 
-
+/*
+Sets mememory to register inputs
+*/
 InputManager::InputManager() {
 	memset(newKeyState, 0, 256 * sizeof(short));
 	memset(oldKeyState, 0, 256 * sizeof(short));
 	memset(keyState, 0, 256 * sizeof(Input));
 };
 
+/*
+Register each key state on the keyboard and stores it according to it's previous state :
+PRESSED -> the key is pressed since (at least) the previous frame
+JUST_PRESSED -> the key just got pressed on this specific frame
+JUST_REALEASED -> the key just released on this specific frame
+RELEASED -> the key is released since (at least) the previous frame
+*/
 void InputManager::ListenToUserInput() {
 
 	for (int i = 0; i < KEYBOARD_SIZE; i++) {
@@ -40,11 +49,16 @@ void InputManager::ListenToUserInput() {
 	}
 }
 
- InputManager::Input InputManager::getVirtualKeyState(int vk) const
-{
+/*
+Retrieves the state of a specific key (VK_)
+*/
+ InputManager::Input InputManager::getVirtualKeyState(int vk) const {
 	return keyState[vk];
 }
 
+ /*
+ Retrieves signleton instance of InputManager
+ */
 InputManager &InputManager::GetInstance() {
     static InputManager inputManager;
     return inputManager;

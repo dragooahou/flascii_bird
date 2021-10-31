@@ -8,22 +8,21 @@
 
 
 
-ScoreDisplayer::ScoreDisplayer(const Vector2 &position, const std::vector<GameObject*> &displayer, AsciiSprite* sprite) : GameObject(), displayer(displayer), sprite(sprite){
+ScoreDisplayer::ScoreDisplayer(const Vector2 &position, const std::vector<GameObject*> &displayer, AsciiSprite* sprite) : GameObject(), displayer(displayer), sprite(sprite) {
     SetPosition(position);
 }
 
-void ScoreDisplayer::Move(const Vector2 &position){
-	
+void ScoreDisplayer::Move(const Vector2 &position) {
 	for (int i = 0; i < 3; i++) {
 		displayer[i]->SetPosition(Vector2(position.x + 7 * i, position.y));
 	}
-	
 }
 
 void ScoreDisplayer::Update() {
 
 	div_t result;
 	int p = 0;
+
 	for (int i = 2; i>=0; i--) {
 		p = powf(10, i);
 		result = div(GameManager::GetInstance().score, p);
@@ -32,8 +31,7 @@ void ScoreDisplayer::Update() {
 
 }
 
-GameObject* ScoreDisplayer::GetDisplayer(int i)
-{
+GameObject* ScoreDisplayer::GetDisplayer(int i) {
 	return displayer[i];
 }
 

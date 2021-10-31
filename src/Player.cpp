@@ -5,11 +5,9 @@
 
 #include "Player.h"
 
-
-Player::Player() {
-
-}
-
+/*
+Creates a player instance
+*/
 Player::Player(Vector2 position, GfxPtr gfx) : GameObject(position, gfx)
 {
 	acceleration = 0.f;
@@ -23,23 +21,24 @@ void Player::Update() {
 
 		acceleration = 0.f;
 		velocity = 0.f;
-		velocity -= jumpForce;
-		acceleration -= jumpForce/3;
+		velocity -= JUMP_FORCE;
+		acceleration -= JUMP_FORCE/3;
 
 	}
 
 	float initialVelocity = velocity;
 
-	acceleration += gravity;
+	acceleration += GRAVITY;
 
-
+	// According to Newton, this might be the right formula
 	velocity = initialVelocity + (acceleration * Timer::GetInstance().GetElapsedSeconds(true));
 
-	if (velocity >= velocityCap) {
-		velocity = velocityCap;
+	// Applies a velocity cap to mimic air resistance
+	if (velocity >= VELOCITY_CAP) {
+		velocity = VELOCITY_CAP;
 	}
-	else if (velocity <= -velocityCap) {
-		velocity = -velocityCap;
+	else if (velocity <= -VELOCITY_CAP) {
+		velocity = -VELOCITY_CAP;
 	}
 
 	Vector2 velocityVector = Vector2(0.f, velocity);
@@ -55,5 +54,5 @@ void Player::Update() {
 }
 
 const Colliders::ICollider *Player::GetCollider() const {
-    return &collider;
+	return &collider;
 }

@@ -1,8 +1,7 @@
 #include <Windows.h>
 #include "Timer.h"
 
-Timer::Timer()
-{
+Timer::Timer() {
 	QueryPerformanceCounter(&lastUpdateTime);
 	LARGE_INTEGER li_freq;
 	QueryPerformanceFrequency(&li_freq);
@@ -10,13 +9,11 @@ Timer::Timer()
 	freq /= 1000;
 }
 
-void Timer::Start()
-{
+void Timer::Start() {
 	QueryPerformanceCounter(&lastUpdateTime);
 }
 
-float Timer::GetElapsedSeconds(bool restart = false)
-{
+float Timer::GetElapsedSeconds(bool restart = false) {
 	LARGE_INTEGER timeNow;
 	QueryPerformanceCounter(&timeNow);
 	LONGLONG elapsedLong = timeNow.QuadPart - lastUpdateTime.QuadPart;
@@ -30,8 +27,7 @@ float Timer::GetElapsedSeconds(bool restart = false)
 	return elapsed;
 }
 
-unsigned long Timer::GetElapsedMs(bool restart = false)
-{
+unsigned long Timer::GetElapsedMs(bool restart = false) {
 	LARGE_INTEGER timeNow;
 	QueryPerformanceCounter(&timeNow);
 	LONGLONG elapsedLong = timeNow.QuadPart - lastUpdateTime.QuadPart;

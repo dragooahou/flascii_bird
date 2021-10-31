@@ -8,15 +8,15 @@ class Obstacle : public GameObject {
     Colliders::Compound collider;
 
 private:
-	float fallingSpeed = -0.3f;
-	float offset = 26.f;
+
+	static constexpr float FALLING_SPEED = -0.3f;
+	static constexpr float FALLING_OFFSET = 26.f;
+	static constexpr float SCROLLING_SPEED = 2.f;
 
 public:
 
-	static constexpr float scrollingSpeed = 2.f;
-
 	Player* player;
-	Obstacle();
+	Obstacle() = default;
 	Obstacle(Player* player, Vector2 position, GfxPtr gfx);
 
 	bool isBehindPlayer = false;

@@ -17,9 +17,10 @@ private:
     GfxPtr gfx;
 
 public:
+
 	virtual void Update();
 
-    GameObject();
+    GameObject() = default;
     GameObject(Vector2 position, GfxPtr gfx);
 
     const Vector2 &GetPosition() const;

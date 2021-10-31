@@ -9,7 +9,7 @@ class Player : public GameObject {
 
 public:
 
-	Player();
+	Player() = default;
 	Player(Vector2 position, GfxPtr gfx);
 
 	void Update() override;
@@ -19,9 +19,10 @@ public:
 private:
 
 	int score = 0;
-	static constexpr float gravity = 0.3f;
-	static constexpr float jumpForce = 3.f;
-	static constexpr float velocityCap = 1.1f;
+	static constexpr float GRAVITY = 0.3f;
+	static constexpr float JUMP_FORCE = 3.f;
+	static constexpr float VELOCITY_CAP = 1.1f;
 	float acceleration;
 	float velocity;
+
 };

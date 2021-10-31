@@ -6,16 +6,15 @@
 class BackgroundObject : public GameObject {
 
 private:
-	float depth;
-	void SetDepth(float depth);
 
+	float depth;
 
 public :
-	float GetDepth();
 
-	BackgroundObject();
+	BackgroundObject() = default;
 	BackgroundObject(float depth, const Vector2 &position, GfxPtr gfx);
-	void Update();
 
+	void Update();
+	float GetDepth();
 
 };

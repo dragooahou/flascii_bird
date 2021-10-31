@@ -33,6 +33,10 @@ using namespace std;
 STR_TO_COLOR_WITH_PREFIX(FG)
 STR_TO_COLOR_WITH_PREFIX(BG)
 
+
+/*
+Generates a sprite asset using it's ressource path
+*/
 AsciiSprite::AsciiSprite(const string& filename) {
 
 	ifstream input;
@@ -137,6 +141,9 @@ AsciiSprite::AsciiSprite(const string& filename) {
 
 }
 
+/*
+Generates a blank sprite asset with a given height and width
+*/
 AsciiSprite::AsciiSprite(int height, int width) : height(height), width(width) {
 
     asciiArt = Matrix<CHAR_INFO>(height, width);
@@ -149,6 +156,9 @@ AsciiSprite::AsciiSprite(int height, int width) : height(height), width(width) {
 
 }
 
+/*
+Generates a sprite assset using a char matrix
+*/
 AsciiSprite::AsciiSprite(const Matrix<CHAR_INFO> &matrix) : asciiArt(matrix), height(matrix.GetHeight()), width(matrix.GetWidth()) {
 	
 }

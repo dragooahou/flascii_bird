@@ -5,15 +5,16 @@
 
 class GameOverScene : public Scene {
 
-    constexpr static int STAR_COUNT = 3;
-    constexpr static int DIGIT_COUNT = 10;
+    constexpr static int STARS_SPRITE_AMOUNT = 3;
+    constexpr static int DIGITS_AMOUNT = 10;
 
     AsciiSprite gameOverSprite;
-    AsciiSprite starSprites[STAR_COUNT];
-    AsciiSprite digitSprites[DIGIT_COUNT];
+    AsciiSprite starSprites[STARS_SPRITE_AMOUNT];
+    AsciiSprite digitSprites[DIGITS_AMOUNT];
 
 
 public :
+
 	GameOverScene(int sceneID);
 	void Update() override;
 

@@ -10,7 +10,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 int main() {
 
-    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT);
+    InitWindow(GameManager::SCREEN_WIDTH, GameManager::SCREEN_HEIGHT);
     InitCImg();
 
 

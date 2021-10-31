@@ -11,6 +11,7 @@
 class IGraphics {
 
 public:
+
     enum class Layer {
 
         BACKGROUND,
@@ -22,10 +23,11 @@ public:
     };
 
 private:
+
     Layer layer = Layer::OBJECTS;
 
-
 public:
+
     virtual const AsciiSprite* GetCurrentFrame() = 0;
 
     Layer GetLayer() const;
@@ -33,6 +35,8 @@ public:
 
     virtual float GetRotation();
     virtual void SetRotation(float rotation);
+
+
 };
 
 

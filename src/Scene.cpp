@@ -1,8 +1,7 @@
 #include "Scene.h"
 
 
-Scene::~Scene()
-{
+Scene::~Scene() {
 	for (GameObject* go : gameObjects) {
 		delete go;
 	}

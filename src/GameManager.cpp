@@ -23,12 +23,16 @@ GameManager::GameManager() : inputManager(InputManager::GetInstance()) {
     LoadScene(0);
 }
 
+/*
+Updates every GameObject in the current scene
+*/
 void GameManager::Update() {
-
     currentScene->Update();
-
 }
 
+/*
+Renders every GameObject in the current scene
+*/
 void GameManager::Render() {
 
     renderer.Clear();
@@ -40,8 +44,12 @@ void GameManager::Render() {
 
 }
 
-void GameManager::LoadScene(int n)
-{
+/*
+Loads a new scene as the current scene.
+Free the previous scene memory.
+*/
+void GameManager::LoadScene(int n) {
+
     if(currentScene == nullptr) {
         delete currentScene;
     }
@@ -61,13 +69,12 @@ void GameManager::LoadScene(int n)
             currentScene = new TitleScene(n);
             break;
     }
-
-
 }
 
-
-GameManager& GameManager::GetInstance()
-{
+/*
+Retrieves signleton instance of GameManager
+*/
+GameManager& GameManager::GetInstance() {
     static GameManager gameManager;
     return gameManager;
 }

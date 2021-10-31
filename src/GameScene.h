@@ -18,9 +18,8 @@ class GameScene : public Scene {
     AsciiSprite obstacleSprite;
     AsciiSprite moonSprite;
 
-
-
 public :
+
 	GameScene(int sceneID);
 	void Update() override;
 

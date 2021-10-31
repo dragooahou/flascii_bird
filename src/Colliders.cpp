@@ -20,6 +20,7 @@ bool Colliders::CollideImpl(const Rectangle &lhs, const Rectangle &rhs) {
     }
 
     return true;
+
 }
 
 bool Colliders::CollideImpl(const Circle &lhs, const Circle &rhs) {

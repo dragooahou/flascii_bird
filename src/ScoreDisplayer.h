@@ -6,6 +6,7 @@
 class ScoreDisplayer : public GameObject {
 
 public:
+
 	ScoreDisplayer() = default;
 	ScoreDisplayer(const Vector2 &position, const std::vector<GameObject*> &displayer, AsciiSprite* sprite);
 	void Move(const Vector2& position);

@@ -5,12 +5,6 @@
 #include "GameManager.h"
 
 
-
-
-Obstacle::Obstacle() {
-
-}
-
 Obstacle::Obstacle(Player* player, Vector2 position, GfxPtr gfx) : GameObject(position, gfx), player(player) {
 
     auto rect1 = std::make_shared<Colliders::Rectangle>();
@@ -21,12 +15,13 @@ Obstacle::Obstacle(Player* player, Vector2 position, GfxPtr gfx) : GameObject(po
     rect2->size = Vector2(16, 59);
     rect2->position.y = 82;
     collider.colliders.push_back(rect2);
+
 }
 
 void Obstacle::Update() {
 
 	Vector2 pos = GetPosition();
-	Vector2 scrollingVector = {scrollingSpeed, fallingSpeed};
+	Vector2 scrollingVector = {SCROLLING_SPEED, FALLING_SPEED};
 	SetPosition(pos - scrollingVector);
 
     if (CollideWith(*player)) {
@@ -40,11 +35,12 @@ void Obstacle::Update() {
 
 	if (pos.x <= 0.f) {
 		float randomRatio = (rand()/(float)RAND_MAX) - 0.5f;
-		SetPosition({GameManager::screenWidth, GameManager::screenHeight / 2 + (randomRatio * (GameManager::screenHeight / 2) - offset) });
+		SetPosition({GameManager::SCREEN_WIDTH, GameManager::SCREEN_HEIGHT / 2 + (randomRatio * (GameManager::SCREEN_HEIGHT / 2) - FALLING_OFFSET) });
         isBehindPlayer = false;
 	}
 
     collider.position = GetPosition() - GetGfx()->GetCurrentFrame()->GetCenterOffset();
+
 }
 
 const Colliders::ICollider *Obstacle::GetCollider() const {

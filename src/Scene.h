@@ -14,11 +14,4 @@ public:
 	virtual ~Scene();
 	const int sceneID = -1;
 
-private :
-
-	
-	
-
-
-
 };

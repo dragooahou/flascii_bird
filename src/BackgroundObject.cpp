@@ -1,33 +1,28 @@
 #include "BackgroundObject.h"
 #include "GameObject.h"
+#include  "GameManager.h"
 
-float BackgroundObject::GetDepth()
-{
+#define OUT_OF_SCREEN_OFFSET 10
+#define RANDOM_ADDED_OFFSET 60
+
+
+float BackgroundObject::GetDepth() {
 	return depth;
 }
 
-void BackgroundObject::SetDepth(float depth)
-{
-	this->depth = depth;
-}
 
-BackgroundObject::BackgroundObject()
-{
-}
-
-BackgroundObject::BackgroundObject(float depth, const Vector2& position, GfxPtr gfx)
-{
-	SetPosition(position);
-	SetGfx(gfx);
-	SetDepth(depth);
-}
+/*
+A scrolling GameObject with a depth value used for parallax
+*/
+BackgroundObject::BackgroundObject(float depth, const Vector2& position, GfxPtr gfx) : GameObject(position, gfx), depth(depth) {}
 
 
-void BackgroundObject::Update()
-{
-
+/*
+Scrolling according to depth value
+*/
+void BackgroundObject::Update() {
 	if (GetPosition().x <= -20) {
-		SetPosition({ 250 + (rand() / (float)RAND_MAX) * 60, (rand() / (float)RAND_MAX) * 66 });
+		SetPosition({ GameManager::SCREEN_WIDTH + OUT_OF_SCREEN_OFFSET + (rand() / (float)RAND_MAX) * RANDOM_ADDED_OFFSET, (rand() / (float)RAND_MAX) * GameManager::SCREEN_HEIGHT });
 	}
 	SetPosition({ GetPosition().x -(SPEED / (depth+2)), GetPosition().y });
 }
