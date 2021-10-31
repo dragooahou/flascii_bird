@@ -4,6 +4,7 @@
 #include "Timer.h"
 
 #include "Player.h"
+#include "GameManager.h"
 
 /*
 Creates a player instance
@@ -48,6 +49,11 @@ void Player::Update() {
     GetGfx()->SetRotation(angle);
 
     SetPosition(pos + velocityVector);
+
+    // Lose when player touch on the ground
+    if(GetPosition().y > GameManager::SCREEN_HEIGHT) {
+        GameManager::GetInstance().LoadScene(2);
+    }
 
     collider.position = GetPosition() - collider.size/2.f;
 
