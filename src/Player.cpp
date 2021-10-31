@@ -51,7 +51,7 @@ void Player::Update() {
     SetPosition(pos + velocityVector);
 
     // Lose when player touch on the ground
-    if(GetPosition().y > GameManager::SCREEN_HEIGHT) {
+    if(GetPosition().y > GameManager::SCREEN_HEIGHT || GetPosition().y < 0) {
         GameManager::GetInstance().LoadScene(2);
     }
 
